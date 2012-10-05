@@ -1,0 +1,443 @@
+<html>
+    <head>
+        <title>LQueue</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    </head>
+    <body text="#000000" bgColor="#ffffff">
+        
+<h1>LQueue</h1>
+        <table cellSpacing="1" cellPadding="2" width="100%" border="0">
+            <tr>
+                <td bgColor="#e6e6e6"><b>Description</b></td>
+                
+    <td bgColor="#e6e6e6">Queue data structure</td>
+            </tr>
+            <tr>
+                
+    <td bgColor="#e6e6e6"><b>Header file</b></td>
+                
+    <td bgColor="#e6e6e6"><tt>LQueue.h</tt></td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Author</b></td>
+                
+    <td bgColor="#e6e6e6"><A href="http://www.dis.uniroma1.it/%7Edemetres">Camil 
+      Demetrescu</A></td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Created</b></td>
+                <td bgColor="#e6e6e6">Dec 28, 2002</td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Last updated</b></td>
+                
+    <td bgColor="#e6e6e6">Sep 26, 2003</td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+        <h2>Contents</h2>
+        
+<ul>
+  <li> <A href="#intro">Introduction</A> 
+  <li> <A href="#interface">Interface</A> 
+  <li> <A href="#apiref">API reference</A> 
+  <li><a href="#example">Example</a> 
+  <li> <A href="#history">Revision history</A></li>
+</ul>
+        <hr>
+        <h2><b><a name="intro"></a>Introduction</b></h2>
+        The component <tt>LQueue</tt> provides support for maintaining a first-in-first-out 
+(FIFO) queue data structure. 
+<p>
+            <hr>
+            <h2><b><a name="interface"></a>Interface</b></h2>
+            <table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Constants</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"> 
+      <pre>LQueue_ID
+LQueue_EMPTY_QUEUE
+LQueue_BASE_TYPE_MISMATCH
+</pre>
+    </td>
+                </tr>
+            </table>
+            <p><table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Types</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2">
+      <pre>LQueue</pre>
+                    </td>
+                </tr>
+            </table>
+            <p><table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Functions</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"> 
+      <pre>LQueue*      LQueue_New           (LType_TType inType)<br>void         LQueue_Delete        (LQueue** ThisA)<br>Bool         LQueue_IsEmpty       (LQueue* This)<br>void         LQueue_EnqueueI1     (LQueue* This,    i1 inVal)<br>void         LQueue_EnqueueUI1    (LQueue* This,   ui1 inVal)<br>void         LQueue_EnqueueI2     (LQueue* This,    i2 inVal)<br>void         LQueue_EnqueueUI2    (LQueue* This,   ui2 inVal)<br>void         LQueue_EnqueueI4     (LQueue* This,    i4 inVal)<br>void         LQueue_EnqueueUI4    (LQueue* This,   ui4 inVal)<br>void         LQueue_EnqueueF4     (LQueue* This,    f4 inVal)<br>void         LQueue_EnqueueF8     (LQueue* This,    f8 inVal)<br>void         LQueue_EnqueueBool   (LQueue* This,  Bool inVal)<br>void         LQueue_EnqueuePtr    (LQueue* This, const void* inVal)<br>void         LQueue_EnqueueItem   (LQueue* This, const void* inItem)<br>i1           LQueue_DequeueI1     (LQueue* This)<br>ui1          LQueue_DequeueUI1    (LQueue* This)<br>i2           LQueue_DequeueI2     (LQueue* This)<br>ui2          LQueue_DequeueUI2    (LQueue* This)<br>i4           LQueue_DequeueI4     (LQueue* This)<br>ui4          LQueue_DequeueUI4    (LQueue* This)<br>f4           LQueue_DequeueF4     (LQueue* This)<br>f8           LQueue_DequeueF8     (LQueue* This)<br>Bool         LQueue_DequeueBool   (LQueue* This)<br>void*        LQueue_DequeuePtr    (LQueue* This)<br>void         LQueue_DequeueItem   (LQueue* This, void* outItem)<br>ui4          LQueue_GetUsedMem    (LQueue* This)<br>LType_TType  LQueue_GetBaseType   (LQueue* This)</pre>
+    </td>
+                </tr>
+            </table>
+            <p><hr>
+            <h2><a name="apiref"></a>API Reference</h2>
+            
+<table cellSpacing="1" cellPadding="4" width="100%">
+  <tr bgcolor="#bbbbbb"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#ff0000">New</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>LType_TType inType</pre>
+    </td>
+    <td bgColor="#e6e6e6">Creates object containing an empty queue with items 
+      of type <tt>inType</tt>. <font color="#ff0000"> Caller is responsible of 
+      dellocating the created object using <tt>LQueue_Delete</tt>.</font> </td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LQueue*</tt></p>
+      <p>pointer to newly created object</p>
+    </td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>Delete</tt></td>
+    <td bgColor="#e6e6e6"><tt>LQueue** ThisA</tt></td>
+    <td bgColor="#e6e6e6">Releases object <tt>*ThisA</tt>. <tt>*ThisA</tt> is 
+      set to <tt>NULL</tt>. </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"> 
+      <pre>IsEmpty</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"><tt>LQueue* This</tt></td>
+    <td bgColor="#e6e6e6">Returns <tt>TRUE</tt> if the data structure is empty, 
+      and <tt>FALSE</tt> otherwise.</td>
+    <td bgColor="#e6e6e6"><tt>Bool</tt></td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueueI1</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+i1      inVal</pre>
+    </td>
+    <td bgcolor="#e6e6e6" rowspan="10">Inserts value <tt>inVal</tt> of the specified 
+      type into the data structure. The item type of the queue must be the same 
+      as the type of the inserted element.</td>
+    <td bgcolor="#e6e6e6" rowspan="10"> -</td>
+    <td bgcolor="#e6e6e6" rowspan="10"> 
+      <p><tt>BASE_TYPE_MISMATCH</tt></p>
+      <p>if the item type of the queue is not compatible with the operation.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueueUI1</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+ui1     inVal</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueueI2</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+i2      inVal</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueueUI2</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+ui2     inVal</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueueI4</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+i4      inVal</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueueUI4</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+ui4     inVal</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueueF4</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+f4      inVal</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueueF8</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+f8      inVal</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueueBool</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+Bool    inVal</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>EnqueuePtr</pre>
+    </td>
+    <td noWrap bgcolor="#e6e6e6"> 
+      <pre>LQueue* This 
+void*   inVal</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"> 
+      <pre>EnqueueItem</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This
+void*   inItem</pre>
+    </td>
+    <td bgColor="#e6e6e6">Inserts item into the data structure.</td>
+    <td bgColor="#e6e6e6">-</td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"> 
+      <pre>DequeueI1</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgColor="#e6e6e6" rowspan="10">Extracts the oldest-inserted value of the 
+      specified type from the data structure. The queue must not be empty.<br>
+    </td>
+    <td bgColor="#e6e6e6"> 
+      <pre>i1</pre>
+    </td>
+    <td bgColor="#e6e6e6" rowspan="10">
+      <p><tt>BASE_TYPE_MISMATCH</tt></p>
+      <p>if the item type of the queue is not compatible with the operation.</p>
+      <p><tt>EMPTY_QUEUE</tt></p>
+      <p>if the queue is empty.</p>
+      </td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"> 
+      <pre>DequeueUI1</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgColor="#e6e6e6"> 
+      <pre>ui1</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>DequeueI2</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgcolor="#e6e6e6"> 
+      <pre>i2</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>DequeueUI2</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgcolor="#e6e6e6"> 
+      <pre>ui2</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>DequeueI4</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgcolor="#e6e6e6"> 
+      <pre>i4</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>DequeueUI4</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgcolor="#e6e6e6"> 
+      <pre>ui4</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>DequeueF4</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgcolor="#e6e6e6"> 
+      <pre>f4</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>DequeueF8</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgcolor="#e6e6e6"> 
+      <pre>f8</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>DequeueBool</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgColor="#e6e6e6"> 
+      <pre>Bool</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>DequeuePtr</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>LQueue* This</pre>
+    </td>
+    <td bgColor="#e6e6e6"> 
+      <pre>void*</pre>
+    </td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6">
+      <pre>DequeueItem</pre>
+    </td>
+    <td noWrap bgColor="#e6e6e6">
+      <pre>LQueue* This
+void*   outItem</pre>
+      </td>
+    <td bgColor="#e6e6e6">Extracts the oldest-inserted value from the data structure, 
+      copying it to buffer <tt>outItem</tt>.</td>
+    <td bgColor="#e6e6e6">-</td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>GetUsedMem</tt></td>
+    <td noWrap bgColor="#e6e6e6"><tt>LQueue* This</tt></td>
+    <td bgColor="#e6e6e6">Returns the memory usage (in bytes) of the data structure.</td>
+    <td bgColor="#e6e6e6"><tt>ui4</tt></td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>GetBaseType</tt></td>
+    <td noWrap bgColor="#e6e6e6"><tt>LQueue* This</tt></td>
+    <td bgColor="#e6e6e6">Returns the type of items.</td>
+    <td bgColor="#e6e6e6"><tt>LType_TType</tt></td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+</table>
+        <p>
+            
+<hr>
+<h2><a name="example"></a>Example</h2>
+<blockquote>
+  <pre>
+#include "LQueue.h"
+#include "LException.h"
+#include "LDebug.h"
+
+int main() {
+    ui4         i;
+    LQueue*     theQueue = NULL;
+    LException* theExcep;
+    
+    Try {
+        /* create new queue */
+        theQueue = LQueue_New(LType_UI4);
+    
+        /* enqueue values */
+        for (i=100; i>0; --i)
+            LQueue_EnqueueUI4(theQueue, i);
+    
+        /* extract all values from queue */
+        while (!LQueue_IsEmpty(theQueue)) {
+            ui4 theVal = LQueue_DequeueUI4(theQueue);
+            LDebug_Print("Extracted value: %lu\n", theVal);
+        }
+    }
+    
+    Catch(theExcep) {
+        LException_Dump(theExcep);
+    }
+    
+    if (theQueue != NULL) LQueue_Delete(&theQueue);
+    
+    return 0;
+}
+</pre>
+</blockquote>
+<hr>
+            <h2><a name="history"></a>Revision history</h2>
+            
+<ul>
+  <li> Sep 26, 2003: created.
+</ul>
+            </body>
+</html>

@@ -1,0 +1,290 @@
+<html>
+<head>
+<title>LMemory</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LMemory</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Memory management</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LMemory.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dis.uniroma1.it/%7Edemetres">Camil 
+      Demetrescu</a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Dec 15, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Sep 25, 2003</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li> <a href="#intro">Introduction</a> </li>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="intro"></a>Introduction</b></h2>
+<p>The component <tt>LMemory</tt> provides support for dynamic heap storage allocation, 
+  memory copy, memory compare, and other memory-related functions. 
+<p><hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LMemory_ID
+LMemory_OUT_OF_MEMORY
+</pre>
+    </td>
+  </tr>
+</table>
+<p> 
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+void*   LMemory_Malloc              (ui4 inSize)
+void*   LMemory_Calloc              (ui4 inSize)
+void*   LMemory_Realloc             (void* inPtr, ui4 inSize)
+void    LMemory_Free                (void** inPtrA)
+void    LMemory_Copy                (const void* inSource, void* outDest, ui4 inSize)
+void    LMemory_Move                (const void* inSource, void* outDest, ui4 inSize)
+void    LMemory_Set                 (void* outPtr, i1 inByte, ui4 inSize)
+void    LMemory_Clear               (void* outPtr, ui4 inSize)
+i4      LMemory_Compare             (const void* inPtr1, const void* inPtr2, ui4 inSize)
+i4      LMemory_GetBlocksCount      ();
+</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Macros with arguments</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LMemory_NewObject(T,O)
+LMemory_DeleteObject(O)
+</pre>
+    </td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p> 
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td bgcolor="#BBBBBB"><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <div align="left"> <tt><font color="#FF0000">Malloc</font></tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+    <td bgcolor="#E6E6E6">Allocate a memory block of <tt>inSize</tt> bytes. The 
+      value of bytes in the block is undefined. <font color="#FF0000">Caller is 
+      responsible of dellocating the created block using <tt>LMemory_Free</tt>.</font></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>void* </tt> 
+      <p>A pointer to the new block of memory.</p>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>OUT_OF_MEMORY</tt> if operation failed.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt><font color="#FF0000">Calloc</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+    <td bgcolor="#E6E6E6">Same as <tt>Malloc</tt>, except for the fact that bytes 
+      in the block are also set to 0. <font color="#FF0000">Caller is responsible 
+      of dellocating the created block using <tt>LMemory_Free</tt>.</font></td>
+    <td bgcolor="#E6E6E6">A pointer to the new block of memory.</td>
+    <td bgcolor="#E6E6E6"><tt>OUT_OF_MEMORY</tt> if operation failed.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt><font color="#FF0000">Realloc</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>void* inPtr</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Change the size of a block of memory, while 
+      preserving its content. If necessary, the method copies the content to another 
+      block of memory. <font color="#FF0000">Caller is responsible of dellocating 
+      the created block using <tt>LMemory_Free</tt>.</font></td>
+    <td bgcolor="#E6E6E6" rowspan="2">A pointer to the new block of memory.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>OUT_OF_MEMORY</tt> if operation failed.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <div align="left"><tt>Free</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>void** inPtrA</tt></td>
+    <td bgcolor="#E6E6E6">Deallocate memory block <tt>*inPtrA</tt> previously 
+      allocated with <tt>Malloc</tt>, <tt>Calloc</tt>, or <tt>Realloc</tt>. <tt>*inPtrA</tt> 
+      is set to <tt>NULL</tt>.</td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>Copy</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const void* inSource</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Copy <tt>inSize</tt> bytes from <tt>inSource</tt> 
+      to <tt>outDest</tt>. If the source and destination blocks overlap, use <tt>Move</tt>. 
+      <tt>Copy</tt> might be faster than <tt>Move</tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>void* outDest</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>Move</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const void* inSource</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Copy <tt>inSize</tt> bytes from <tt>inSource</tt> 
+      to <tt>outDest</tt>, even if the two blocks overlap.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>void* outDest</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>Set</tt></td>
+    <td bgcolor="#E6E6E6"><tt>void* outPtr</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Copy value <tt>inByte</tt> into each of 
+      the first <tt>inSize</tt> bytes of the block <tt>outPtr</tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>i1 inByte</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>Clear</tt></td>
+    <td bgcolor="#E6E6E6"><tt>void* outPtr</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Copy value <tt>0</tt> into each of the first 
+      <tt>inSize</tt> bytes of the block <tt>outPtr</tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>Compare</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const void* inPtr1</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Perform a bytewise comparison of two blocks 
+      of memory. The first <tt>inSize</tt> bytes of the block <tt>inPtr1</tt> 
+      are compared to the first <tt>inSize</tt> bytes of the block <tt>inPtr2</tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p>A positive <tt>i4</tt> if <tt>inPtr1&gt;inPtr2</tt></p>
+      <p>Zero if <tt>inPtr1==inPtr2</tt></p>
+      <p>A negative <tt>i4</tt> if <tt>inPtr1&lt;inPtr2</tt></p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const void* inPtr2</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <div align="left"><tt>GetBlocksCount</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6">Returns the difference between the actual number of 
+      allocation and deallocation operations performed. Can be used to detect 
+      memory leaks or other memory-related problems.</td>
+    <td bgcolor="#E6E6E6">
+      <p><tt>i4</tt></p>
+      </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+</table>
+<p>
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Macro</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <div align="left"> <tt><font color="#FF0000">NewObject</font></tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>inType</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Allocate a memory block of <tt>sizeof(inType)</tt> 
+      bytes. <tt>inObject</tt> is then copied to the new block<tt></tt>, where 
+      <tt>inObject</tt> must have type <tt>inType</tt>. <font color="#FF0000">Caller 
+      is responsible of dellocating the created block using <tt>LMemory_DeleteObject</tt>.</font></td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>void*</tt></p>
+      <p>A pointer to the new block of memory.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>OUT_OF_MEMORY</tt> if operation failed.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><tt>inObject</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>DeleteObject</tt></td>
+    <td bgcolor="#E6E6E6"><tt>inPtrA</tt></td>
+    <td bgcolor="#E6E6E6">Same as <tt>Free</tt>.</td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 15, 2001: created</li>
+  <li>Sep 7, 2002: changed Free</li>
+  <li>Sep 25, 2003: updated</li>
+</ul>
+</body>
+</html>

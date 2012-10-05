@@ -1,0 +1,358 @@
+<html>
+<head>
+<title>LArray</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LArray</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Resizable array</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LArray.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dsi.uniroma1.it/%7Efinocchi">Irene 
+      Finocchi </a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Dec 12, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Sep 7, 2002</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#intro">Introduction</a> </li>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="intro"></a>Introduction</b></h2>
+<p>The component <tt>LArray</tt> provides support for maintaining an array whose 
+  size is not known until run time. Items in the array must have all the same 
+  size and entries are indexed by numbers in the range [0,<tt>n-1</tt>], where 
+  <tt>n</tt> is the number of entries in the array. Member functions allow it 
+  to add new items, remove existing items, and browse the array by index, retrieving 
+  items, and accessing directly the chunk of memory containing the items.
+<p><hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+<p> 
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LArray_ID
+LArray_OUT_OF_MEMORY
+LArray_INVALID_SIZE
+LArray_OUT_OF_RANGE
+</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>struct LArray
+</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LArray*     LArray_New              (ui4 inItemSize)
+LArray*     LArray_NewFromData      (ui4 inItemSize, void** inDataA, ui4 inDataSize)
+void        LArray_Delete           (LArray** ThisA)
+
+void        LArray_InsertItemAt     (LArray* This, const void* inItem, ui4 inIndex)
+void        LArray_RemoveItemAt     (LArray* This, ui4 inIndex)
+ui4         LArray_AppendItem       (LArray* This, const void* inItem)
+void        LArray_ResizeBy         (LArray* This, i4 inDeltaItems)
+void        LArray_RemoveLastItem   (LArray* This)
+void        LArray_RemoveAllItems   (LArray* This)
+void*       LArray_ItemAt           (LArray* This, ui4 inIndex)
+void*       LArray_LastItem         (LArray* This)
+Bool        LArray_FetchItemAt      (LArray* This, ui4 inIndex, void* outItem)
+void*       LArray_GetData          (LArray* This)
+ui4         LArray_GetDataSize      (LArray* This)
+ui4         LArray_GetItemsCount    (LArray* This)
+void        LArray_Dump             (LArray* This)
+ui4         LArray_GetUsedMem       (LArray* This)
+void        LArray_InstallSyncPtr   (LArray* This, void** thruDataPtr)
+ui4         LArray_GetItemSize      (LArray* This);
+</pre>
+    </td>
+  </tr>
+</table>
+<p> 
+<hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p>
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt><font color="#FF0000">New</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>ui4 inItemSize</tt></td>
+    <td bgcolor="#E6E6E6">Create object containing an empty array. The size of 
+      each array item is set to <tt>inItemSize</tt>. <font color="#FF0000">Caller 
+      is responsible of dellocating the created object using <tt>LArray_Delete</tt>.</font></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>LArray*</tt></p>
+      <p>pointer to newly created object</p>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>INVALID_SIZE</tt> if <tt>inItemSize</tt>==0.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <div align="left"> <tt><font color="#FF0000">NewFromData</font></tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>ui4 inItemSize</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p>Create object with data segment <tt>*inDataA</tt> of size <tt>inDataSize</tt>. 
+        The entry size is <tt>inItemSize</tt>.<font color="#0000FF"> The <tt>LArray</tt> 
+        object becomes responsible of deallocating the segment <tt>*inDataA</tt>, 
+        which should not be deallocated by caller.<font color="#FF0000"> </font></font><font color="#FF0000">Caller 
+        is responsible of dellocating the created object using <tt>LArray_Delete</tt>.</font> 
+        <tt>*</tt><tt>inDataA</tt> is set to <tt>NULL</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p><tt>LArray*</tt></p>
+      <p>pointer to newly created object</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>INVALID_SIZE</tt> if <tt>inItemSize</tt>==0 
+      or if <tt>inDataSize</tt> modulo <tt>inItemSize</tt> is non-zero.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>void** inDataA</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inDataSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>Delete</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray** ThisA</tt></td>
+    <td bgcolor="#E6E6E6">Release object <tt>*ThisA</tt>. <tt>*ThisA</tt> is set 
+      to <tt>NULL</tt>. </td>
+    <td bgcolor="#E6E6E6"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt> ResizeBy</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Expand (if <tt>inDeltaItems</tt>&gt;0) or 
+      shrink (if <tt>inDeltaItems</tt>&lt;0) the array by <tt>inDeltaItems</tt> 
+      items. If<tt>inDeltaItems</tt>==0 the operation has no effect.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>OUT_OF_MEMORY </tt>if memory allocation 
+      fails.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>i4 inDeltaItems</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>AppendItem</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Expand the array by 1 entry and copy item 
+      <tt>inItem</tt> to the new entry.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>ui4</tt></p>
+      <p>Index of the newly inserted item.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>OUT_OF_MEMORY </tt>if memory allocation 
+      fails.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const void* inItem</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>RemoveLastItem</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6">Remove the last entry in the array. Do nothing if the 
+      array is empty.</td>
+    <td bgcolor="#E6E6E6"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>RemoveAllItems</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6">Remove all entries in the array. Do nothing if the array 
+      is already empty. After the operation <tt>GetItemsCount()</tt> returns zero.</td>
+    <td bgcolor="#E6E6E6"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>ItemAt</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>void*</tt></p>
+      <p>Pointer to the item with index <tt>inIndex</tt> in the range [0..<tt>GetItemsCount()-1</tt>].</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>OUT_OF_RANGE</tt> if <tt>inIndex</tt> 
+      is out of range.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inIndex</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LastItem</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>void*</tt></p>
+      <p>Pointer to the last item, with index <tt>GetItemsCount()-1</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>OUT_OF_RANGE</tt> if the array is empty.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>FetchItemAt</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Copy to <tt>outItem</tt> the content of 
+      the array entry with index <tt>inIndex</tt> in the range [0..<tt>GetItemsCount()-1</tt>]. 
+      Caller must make sure that <tt>outItem</tt> points a buffer large enough 
+      to hold the item.</td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p><tt>Bool</tt></p>
+      <p><tt>TRUE</tt> if a valid entry exists at <tt>inIndex</tt> (and sets <tt>outItem</tt>).<tt><br>
+        FALSE</tt> if <tt>inIndex</tt> is out of range (and leaves <tt>outItem</tt> 
+        unchanged).</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inIndex</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>void* outItem</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>GetData</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6"> 
+      <p>Give external access to the data segment. If <tt>A</tt> is an <tt>LArray</tt> 
+        object whose items have type <tt>T</tt>, then <tt>LArray_ItemAt(A,i)==((T*)LArray_GetData(A))+i</tt>.<font color="#0000FF">The 
+        <tt>LArray</tt> object is still responsible of deallocating the data segment, 
+        which should never be deallocated by caller. </font>The returned pointer 
+        might be no longer valid if an insertion/deletion is performed on the 
+        <tt>LArray</tt> object <tt>This</tt>. See also <tt>InstallSyncPtr</tt> 
+        to maintain a safe pointer to the data segment.</p>
+    </td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>void*</tt></p>
+      <p>Pointer to the current data segment of the array <tt>This</tt> (might 
+        be <tt> NULL</tt> if <tt>GetItemsCount()</tt> is zero).</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>GetDataSize</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>ui4</tt></p>
+      <p>Size in bytes of the data segment in the array <tt>This</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>GetItemsCount</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>ui4</tt></p>
+      <p>Number of valid entries in the array <tt>This</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>GetUsedMem</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6">Compute the total number of bytes internally used by 
+      the object <tt>This</tt></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>ui4</tt></p>
+      <p>Bytes used by object</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>InstallSyncPtr</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Used to maintains a safe external pointer 
+      to the data segment. It installs the address <tt>thruDataPtr</tt> of a pointer 
+      variable and makes it always contain the correct address of the data segment 
+      of object <tt>This</tt>. This way, even if the array might be reallocated 
+      due to some operation, the variable pointed to by <tt>thruDataPtr</tt> will 
+      be always contain the correct address of the data segment.This allows a 
+      faster external access to array items, while still supporting dynamic array 
+      resizing.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>void** thruDataPtr</tt></td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><tt>GetItemSize</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6">Returns the size in bytes of each item in array <tt>This</tt>.</td>
+    <td bgcolor="#E6E6E6">
+      <p><tt>ui4</tt></p>
+      <p>Bytes used by each item in the object</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>Dump</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArray* This</tt></td>
+    <td bgcolor="#E6E6E6">Sends to the debugging console information about <tt>LArray</tt> 
+      object <tt>This</tt>. <b>(Debug Mode)</b></td>
+    <td bgcolor="#E6E6E6"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 12, 2001: created.</li>
+  <li>Sep 7, 2002: changed NewFromData, Delete</li>
+  <li>Jan 8, 2003: added GetUsedMem</li>
+  <li>Sep 24, 2003: added GetItemSize</li>
+</ul>
+</body>
+</html>

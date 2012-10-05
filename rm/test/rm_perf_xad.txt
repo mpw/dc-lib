@@ -1,0 +1,259 @@
+﻿############################
+- rm raw performance analysis
+- December 17, 2010
+############################
+
+x86 code analyzed:
+
+============================
+original loop:
+
+080493ec    movl    -0xC(%ebp), %eax
+----------------------------
+080493ef    movl    (%eax), %eax   <--- reactive memory read operation
+----------------------------
+80493f1     movl    %eax, -0x10(%ebp)
+080493f4    addl    $0x01, -0x14(%ebp)
+080493f8    movl    -0x14(%ebp), %eax
+080493fb    cmpl    0xC(%ebp), %eax
+080493fe    jc      0x00000028     (absolute address = 080493ec)
+
+
+============================
+patched loop: (* = extra instructions)
+
+080493ec*   ljmp    0xF8388C3C     (absolute address = 003d2000) <-- PATCH BB 9
+080493f1    int3    
+080493f2    int3    
+080493f3    int3    
+080493f4    int3    
+080493f5    int3    
+080493f6    int3    
+080493f7    int3    
+080493f8    movl    -0x14(%ebp), %eax
+080493fb    cmpl    0xC(%ebp), %eax
+080493fe    jc      0x00000028     (absolute address = 080493ec)
+
+
+============================
+inlined nop patch (BB 9): (* = extra instructions)
+
+003d2000    movl    -0xC(%ebp), %eax
+----------------------------
+003d2003*   push    %ecx               <--- PATCH 1 START (FIRST INSTRUCTION OF THE PATCH)
+003d2004*   pushf    
+003d2005*   leal    (%eax), %ecx
+003d2007*   cmp     $0xBFFFFFFF, %ecx
+003d200d*   jbe     0x0000001E        (absolute address = 003d201e)
+003d2013    movl    -0x40000000(%ecx), %eax
+003d2019*   nop    
+003d201a*   popf    
+003d201b*   pop     %ecx
+003d201c*   ljmp    0x00000022         (absolute address = 003d2022)
+003d201e*   popf    
+003d201f*   pop     %ecx
+003d2020    movl    (%eax), %eax       <--- PATCH 1 END (LAST INSTRUCTION OF THE PATCH)
+----------------------------
+003d2022    movl    %eax, -0x10(%ebp)
+003d2025    addl    $0x01, -0x14(%ebp)
+003d2029*   ljmp    0x07C773F8         (absolute address = 080493f8)
+
+
+============================
+default handler call patch (BB 9): (* = extra instructions)
+
+00136000    movl    -0xC(%ebp), %eax
+----------------------------
+00136003*   push    %ecx              <--- PATCH 1 START (FIRST INSTRUCTION OF THE PATCH)
+00136004*   pushf    
+00136005*   leal    (%eax), %ecx
+00136007*   cmp     $0xBFFFFFFF, %ecx
+0013600d*   jbe     0x0000002E        (absolute address = 0013602e)
+00136013    movl    -0x40000000(%ecx), %eax
+00136019*   push    %eax
+0013601a*   push    %edx
+0013601b*   push    $0x04
+0013601d*   push    %ecx
+0013601e*   mov     $0x0804939C, %ecx
+00136023*   lcall    %ecx
+00136025*   add     $0x08, %esp
+00136028*   pop     %edx
+00136029*   pop     %eax
+0013602a*   popf    
+0013602b*   pop     %ecx
+0013602c*   ljmp    0x00000032         (absolute address = 00136032)
+0013602e*   popf    
+0013602f*   pop     %ecx
+00136030    movl    (%eax), %eax       <--- PATCH 1 END (LAST INSTRUCTION OF THE PATCH)
+----------------------------
+00136032    movl    %eax, -0x10(%ebp)
+00136035    addl    $0x01, -0x14(%ebp)
+00136039*   ljmp    0x07F133F8         (absolute address = 080493f8)
+
+FUNCTION: read_handler_inline
+
+0804939c*   push    %ebp
+0804939d*   mov     %esp, %ebp
+0804939f*   pop     %ebp
+080493a0*   ret    
+
+
+############################
+- cost analysis
+############################
+
+============================
+original loop execution: X
+
+- x86 instructions = 7
+- actual time for 10^8 iterations: 0.285 seconds (ribbi's Sony Vaio)
+
+080493ec    movl    -0xC(%ebp), %eax
+----------------------------
+080493ef    movl    (%eax), %eax      <--- (reactive) memory read operation
+----------------------------
+80493f1     movl    %eax, -0x10(%ebp)
+080493f4    addl    $0x01, -0x14(%ebp)
+080493f8    movl    -0x14(%ebp), %eax
+080493fb    cmpl    0xC(%ebp), %eax
+080493fe    jc      0x00000028        (absolute address = 080493ec)
+
+
+============================
+patched loop (non-reactive memory): X'
+
+- x86 instructions = 16 (7 + 9 extra)
+- instruction count ratio = 16/7 = 2.28
+- actual time ratio (X'/X) = 1.678/0.285 = 5.88 (10^8 iterations)
+- actual time ratio (X'/X) with pushf/popf->nop = 0.454/0.285 = 1.59 (10^8 iterations)
+
+- extra instructions (*):
+3 branches (1 conditional)
+2 register push/pop
+2 flag register push/pop (pushf+popf)
+1 cmp
+1 lea
+
+080493ec*   ljmp 0xF8388C3C        (absolute address = 003d2000) <-- PATCH BB 9
+>>
+003d2000    movl -0xC(%ebp), %eax
+----------------------------
+003d2003*   push    %ecx             <--- PATCH 1 START (FIRST INSTRUCTION OF THE PATCH)
+003d2004*   pushf    
+003d2005*   leal    (%eax), %ecx
+003d2007*   cmp     $0xBFFFFFFF, %ecx
+003d200d*   jbe     0x0000001E       (absolute address = 003d201e)
+003d201e*   popf    
+003d201f*   pop     %ecx
+003d2020    movl    (%eax), %eax     <--- PATCH 1 END (LAST INSTRUCTION OF THE PATCH)
+----------------------------
+003d2022    movl    %eax, -0x10(%ebp)
+003d2025    addl    $0x01, -0x14(%ebp)
+003d2029*   ljmp    0x07C773F8       (absolute address = 080493f8)
+<<
+080493f8    movl    -0x14(%ebp), %eax
+080493fb    cmpl    0xC(%ebp), %eax
+080493fe    jc      0x00000028       (absolute address = 080493ec)
+
+
+============================
+patched loop + inlined nop execution (reactive memory): X+A
+
+- x86 instructions = 18 (7 + 11 extra)
+- instruction count ratio = 18/7 = 2.57
+- actual time ratio ((X+A)/X) = 1.678/0.285 = 5.88 (10^8 iterations)
+- actual time ratio ((X+A)/X) with pushf/popf->nop = 0.454/0.285 = 1.59 (10^8 iterations)
+
+- extra instructions (*):
+4 branches (1 conditional)
+2 register push/pop
+2 flag register push/pop (pushf+popf)
+1 cmp
+1 lea
+1 nop
+
+080493ec*   ljmp 0xF8388C3C        (absolute address = 003d2000) <-- PATCH BB 9
+>>
+003d2000    movl -0xC(%ebp), %eax
+----------------------------
+003d2003*   push    %ecx
+003d2004*   pushf    
+003d2005*   leal    (%eax), %ecx
+003d2007*   cmp     $0xBFFFFFFF, %ecx
+003d200d*   jbe     0x0000001E     (absolute address = 003d201e)
+003d2013    movl    -0x40000000(%ecx), %eax
+003d2019*   nop    
+003d201a*   popf    
+003d201b*   pop     %ecx
+003d201c*   ljmp    0x00000022     (absolute address = 003d2022)
+----------------------------
+003d2022    movl    %eax, -0x10(%ebp)
+003d2025    addl    $0x01, -0x14(%ebp)
+003d2029*   ljmp    0x07C773F8     (absolute address = 080493f8)
+<<
+080493f8    movl    -0x14(%ebp), %eax
+080493fb    cmpl    0xC(%ebp), %eax
+080493fe    jc      0x00000028     (absolute address = 080493ec)
+
+
+============================
+patched loop + empty handler call execution (reactive memory): X+A+D
+
+- x86 instructions = 30 (7 + 23 extra)
+- instruction count ratio = 30/7 = 4.2
+- actual time ratio ((X+A+D)/X) = 1.855/0.285 = 6.51 (10^8 iterations)
+- actual time ratio with pushf/popf->nop = 0.645/0.285 = 2.26 (10^8 iterations)
+
+- inline patching gain:
+     > instruction count                = (30-18)/30          = 40.0 %
+     > actual time with pushf/popf      = (1.855-1.678)/1.855 =  9.5 %
+     > actual time with pushf/popf->nop = (0.645-0.454)/0.645 = 29.8 %
+
+- extra instructions (*):
+4 branches (1 conditional)
+1 call
+9 register/immediate push/pop
+2 flag register push/pop (pushf+popf)
+1 cmp
+1 lea
+1 nop
+2 mov
+1 ret
+1 add
+
+080493ec*   ljmp 0xF8388C3C        (absolute address = 00136000) <-- PATCH BB 9
+>>
+00136000    movl    -0xC(%ebp), %eax
+----------------------------
+00136003*   push    %ecx              <--- PATCH 1 START (FIRST INSTRUCTION OF THE PATCH)
+00136004*   pushf    
+00136005*   leal    (%eax), %ecx
+00136007*   cmp     $0xBFFFFFFF, %ecx
+0013600d*   jbe     0x0000002E        (absolute address = 0013602e)
+00136013    movl    -0x40000000(%ecx), %eax
+00136019*   push    %eax
+0013601a*   push    %edx
+0013601b*   push    $0x04
+0013601d*   push    %ecx
+0013601e*   mov     $0x0804939C, %ecx
+00136023*   lcall    %ecx
+>>
+0804939c*   push    %ebp
+0804939d*   mov     %esp, %ebp
+0804939f*   pop     %ebp
+080493a0*   ret    
+<<
+00136025*   add     $0x08, %esp
+00136028*   pop     %edx
+00136029*   pop     %eax
+0013602a*   popf    
+0013602b*   pop     %ecx
+0013602c*   ljmp    0x00000032         (absolute address = 00136032)
+----------------------------
+00136032    movl    %eax, -0x10(%ebp)
+00136035    addl    $0x01, -0x14(%ebp)
+00136039*   ljmp    0x07F133F8         (absolute address = 080493f8)
+<<
+080493f8    movl    -0x14(%ebp), %eax
+080493fb    cmpl    0xC(%ebp), %eax
+080493fe    jc      0x00000028         (absolute address = 080493ec)

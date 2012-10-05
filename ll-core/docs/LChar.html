@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>LChar</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LChar</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Character management</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LChar.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dis.uniroma1.it/%7Edemetres">Camil 
+      Demetrescu</a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Dec 14, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Sep 24, 2003</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LChar_ID
+</pre>
+    </td>
+  </tr>
+</table>
+<p> 
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+Bool LChar_IsAlnum  (c)
+Bool LChar_IsAlpha  (c)
+Bool LChar_IsCntrl  (c)
+Bool LChar_IsDigit  (c)
+Bool LChar_IsGraph  (c)
+Bool LChar_IsLower  (c)
+Bool LChar_IsPrint  (c)
+Bool LChar_IsPunct  (c)
+Bool LChar_IsSpace  (c)
+Bool LChar_IsUpper  (c)
+Bool LChar_IsXDigit (c)
+i2   LChar_ToLower  (c)
+i2   LChar_ToUpper  (c)</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr> 
+    <td bgcolor="#BBBBBB"><b>Description</b></td>
+  </tr>
+  <tr> 
+    <td>This component simply provides wrappers for the <tt>&lt;ctype.h&gt;</tt> 
+      standard C functions.</td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 14, 2001: created<tt></tt></li>
+</ul>
+<p align="right">&nbsp;</p>
+
+</body>
+</html>

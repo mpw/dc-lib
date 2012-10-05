@@ -1,0 +1,226 @@
+<html>
+<head>
+<title>LTime</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LTime</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Time management</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LTime.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dis.uniroma1.it/%7Edemetres">Camil 
+      Demetrescu</a>, Andrea Ribichini</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Dec 19, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Sep 25, 2003</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li> <a href="#intro">Introduction</a> </li>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="intro"></a>Introduction</b></h2>
+<p>The component <tt>LTime</tt> provides functions for time access.
+<p><hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2" width="667"> 
+      <h4><a name="component2"></a>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>LTime_ID
+</pre>
+    </td>
+  </tr>
+</table>
+<p> 
+<p> 
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2" width="667"> 
+      <h4><a name="component2"></a>Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2" width="667"> 
+      <pre>struct {
+    ui2 mYear;
+    ui1 mMonth;
+    ui1 mDay;
+    ui1 mHour;
+    ui1 mMin;
+    ui1 mSec;
+    ui2 mMsec;
+} LTime</pre>
+    </td>
+  </tr>
+</table>
+<p><table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+f8    LTime_GetUserTime     ()      
+LTime LTime_GetCalendarTime ()
+i1    LTime_Compare         (LTime t1, LTime t2)
+ui2   LTime_GetYear         (LTime t) 
+ui1   LTime_GetMonth        (LTime t) 
+ui1   LTime_GetDay          (LTime t) 
+ui1   LTime_GetHour         (LTime t) 
+ui1   LTime_GetMin          (LTime t)
+ui1   LTime_GetSec          (LTime t) 
+ui2   LTime_GetMsec         (LTime t)
+</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p><hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p> 
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <tt>GetUserTime</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+    <td bgcolor="#E6E6E6">Returns process time (note for the Win32 version: on 
+    Win9x systems, this function returns the number of seconds since the process 
+    was started).</td>
+    <td bgcolor="#E6E6E6"> 
+      <tt>f8</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <div align="left"> <tt>GetCalendarTime</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+    <td bgcolor="#E6E6E6">Returns an LTime struct set to the current time.</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>LTime</tt>
+      </td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <div align="left"> <tt>Compare</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LTime t1</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Compares t1 and t2. If t1&lt;t2 returns -1. 
+    If t1&gt;t2 returns 1. If t1=t2 returns 0.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>i1</tt>
+      </td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LTime t2</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <tt>GetYear</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LTime t</tt></td>
+    <td bgcolor="#E6E6E6">Returns t.mYear.</td>
+    <td bgcolor="#E6E6E6"> 
+      <tt>ui2</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <tt>GetMonth</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LTime t</tt></td>
+    <td bgcolor="#E6E6E6">Returns t.mMonth.</td>
+    <td bgcolor="#E6E6E6"> 
+      <tt>ui1</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <tt>GetDay</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LTime t</tt></td>
+    <td bgcolor="#E6E6E6">Returns t.mDay.</td>
+    <td bgcolor="#E6E6E6"> 
+      <tt>ui1</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <tt>GetHour</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LTime t</tt></td>
+    <td bgcolor="#E6E6E6">Returns t.mHour.</td>
+    <td bgcolor="#E6E6E6"> 
+      <tt>ui1</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <tt>GetMin</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LTime t</tt></td>
+    <td bgcolor="#E6E6E6">Returns t.mMin.</td>
+    <td bgcolor="#E6E6E6"> 
+      <tt>ui1</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <tt>GetSec</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LTime t</tt></td>
+    <td bgcolor="#E6E6E6">Returns t.mSec.</td>
+    <td bgcolor="#E6E6E6"> 
+      <tt>ui1</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"> 
+      <tt>GetMsec</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LTime t</tt></td>
+    <td bgcolor="#E6E6E6">Returns t.mMsec.</td>
+    <td bgcolor="#E6E6E6"> 
+      <tt>ui2</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+</table>
+<p>
+<p><hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 19, 2001: created.</li>
+  <li>May 12, 2003: updated.</li>
+</ul>
+</body>
+</html>

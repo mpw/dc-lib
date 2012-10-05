@@ -1,0 +1,396 @@
+<html>
+<head>
+<title>LArchiveFile</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LArchiveFile</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Component for maintaining a repository of tagged data 
+      blocks residing in a file</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LArchiveFile.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dis.uniroma1.it/%7Edemetres">Camil 
+      Demetrescu</a> and <a href="mailto:holmes@inwind.it">Francesco Mungiguerra</a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Dec 12, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Sep 7, 2002</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#intro">Introduction</a></li>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#fileformat">Archive file format</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="intro"></a>Introduction</b></h2>
+<p>The component <tt>LArchiveFile</tt> provides support for maintaing archive 
+  files containing a collection of tagged data blocks. Each block has a logical 
+  index in the range [0,<tt>GetBlocksCount()-1</tt>] and is identified by a 32 
+  bit integer <i>tag</i> (<tt>ui4</tt> value). When a component <tt>LArchiveFile</tt> 
+  is created, it is associated to a corresponding file on disk. Member functions 
+  allow it to add new data blocks, remove existing data blocks, and browse the 
+  archive by logical index, retrieving block tag, and reading block data in the 
+  form of an <tt>LXPBlock</tt> object. Created archive file are written according 
+  to format described in <a href="#fileformat">archive file format</a>. When the 
+  fragmentation of an archive file gets too high, the file is automatically compacted. 
+<p><hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+<p> 
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LArchiveFile_ID
+LArchiveFile_MAGIC_NUMBER
+LArchiveFile_VERSION
+    
+LArchiveFile_READ
+LArchiveFile_WRITE
+LArchiveFile_READ_WRITE
+    
+LArchiveFile_ILLEGAL_FILE_TYPE
+LArchiveFile_CANT_OPEN_FILE
+LArchiveFile_DAMAGED_FILE
+LArchiveFile_NEWER_FILE_VERSION
+LArchiveFile_IO_ERROR
+LArchiveFile_OUT_OF_RANGE
+LArchiveFile_READ_ONLY_ACCESS
+LArchiveFile_WRITE_ONLY_ACCESS
+</pre>
+    </td>
+  </tr>
+</table>
+<p><table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>LArchiveFile
+LArchiveFile_TOpenMode
+</pre>
+    </td>
+  </tr>
+</table>
+<p><table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LArchiveFile*   LArchiveFile_Open           (const i1* inFileName, LArchiveFile_TOpenMode inMode);
+void            LArchiveFile_Close          (LArchiveFile** ThisA);
+
+ui4             LArchiveFile_AddBlock       (LArchiveFile* This, ui4 inBlockTag, LXPBlock* inTagBlock);
+void            LArchiveFile_RemoveBlock    (LArchiveFile* This, ui4 inBlockIdx); 
+
+ui4             LArchiveFile_GetBlockTag    (LArchiveFile* This, ui4 inBlockIdx);
+LXPBlock*       LArchiveFile_GetXPBlock     (LArchiveFile* This, ui4 inBlockIdx);
+ui4             LArchiveFile_GetBlocksCount (LArchiveFile* This);</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p>
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center" rowspan="2"> <tt><font color="#FF0000">Open</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inFileName</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p>Open archive file specified by the pathname <tt>inFileName</tt>. The 
+        created object provides access to the open file.The behavior is the following:</p>
+      <table width="95%" border="0" cellspacing="1" cellpadding="2">
+        <tr> 
+          <td>&nbsp;</td>
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">READ</font></tt></b></td>
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">WRITE</font></tt></b></td>
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">READ_WRITE</font></tt></b></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><font color="#FFFFFF">File exists</font></b></td>
+          <td bgcolor="#FFFFFF">Provide access to the file. Throw <tt>ILLEGAL_FILE_TYPE</tt> 
+            if file has illegal magic number.</td>
+          <td bgcolor="#FFFFFF">Create empty archive file. Overwrite existing 
+            file.</td>
+          <td bgcolor="#FFFFFF"> 
+            <p>Provide access to the file. Blocks can be added/removed. Throw 
+              <tt>ILLEGAL_FILE_TYPE</tt> if file has illegal magic number.</p>
+          </td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><font color="#FFFFFF">File does not exist</font></b></td>
+          <td bgcolor="#FFFFFF">Throw <tt>CANT_OPEN_FILE</tt> exception.</td>
+          <td bgcolor="#FFFFFF">Create empty archive file and provide access to 
+            it.</td>
+          <td bgcolor="#FFFFFF">Create empty archive file.</td>
+        </tr>
+      </table>
+      <p><font color="#FF0000">Caller is responsible of dellocating the created 
+        object using <tt>LArchiveFile_Close</tt>.</font></p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>LArchiveFile*</tt></p>
+      <p>Pointer to newly created object.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>CANT_OPEN_FILE</tt> if disk operation fails.</p>
+      <p><tt>ILLEGAL_FILE_TYPE</tt> if the file already exists, but has illegal 
+        magic number, and <tt>inMode==READ</tt> or <tt>inMode==READ_WRITE</tt>.</p>
+      <p><tt>DAMAGED_FILE</tt> if archive file<tt>inFileName</tt> is valid, but 
+        the file appears to be damaged.</p>
+      <p><tt>NEWER_FILE_VERSION</tt> if archive file<tt>inFileName</tt> has been 
+        created by an earlier version of the program.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>TOpenMode inMode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center"><tt>Close</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArchiveFile** ThisA</tt></td>
+    <td bgcolor="#E6E6E6">Close the file associated to the object <tt>*ThisA</tt>. 
+      Release object memory. Compact archive if fragmentation gets too high. <tt>*ThisA</tt> 
+      is set to <tt>NULL</tt>.</td>
+    <td bgcolor="#E6E6E6"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6" align="center" rowspan="3"><tt>AddBlock</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArchiveFile* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Add to archive <tt>This</tt> new block with 
+      tag <tt>inBlockTag</tt>, and associated data <tt>inBlock</tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p><tt>ui4</tt></p>
+      <p>index of new block</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p><tt>IO_ERROR</tt> if disk operation fails.</p>
+      <p><tt>READ_ONLY_ACCESS</tt> if archive file is open in read only mode.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inBlockTag</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* inBlock</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center" rowspan="2"><tt>RemoveBlock</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArchiveFile* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Remove block with index <tt>inBlockIdx</tt> 
+      from archive file <tt>This</tt>. <tt>inTagIdx</tt> must be in the range 
+      [0, <tt>GetTagsCount()-1</tt>].</td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>OUT_OF_RANGE</tt> if index <tt>inBlockIdx</tt> 
+      is out of range.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inTagIdx</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center" rowspan="2"><tt>GetBlockTag</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArchiveFile* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p>Get tag of block with index <tt>inBlockIdx</tt> in archive <tt>This</tt>.<tt>inBlockIdx</tt> 
+        must be in the range [0, <tt>GetBlocksCount()-1</tt>].</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>ui4</tt></p>
+      <p>Tag of the block with index <tt>inBlockIdx</tt> in the archive file.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>OUT_OF_RANGE</tt> if index <tt>inBlockIdx</tt> 
+      is out of range.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inBlockIdx</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center" rowspan="2"><tt><font color="#FF0000">GetXPBlock</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArchiveFile* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Create new <tt>LXPBlock</tt> object starting 
+      from data in the tag with index <tt>inBlockIdx</tt> in archive <tt>This</tt>. 
+      The block should be deallocated by the caller. <tt>inBlockIdx</tt> must 
+      be in the range [0, <tt>GetTagsCount()</tt>-1].<font color="#FF0000"> Caller 
+      is responsible of deallocating the created <tt>LXPBlock</tt> object using 
+      <tt>LXPBlock_Delete</tt></font><b><font color="#FF0000">.</font></b></td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>LXPBlock</tt>*</p>
+      <p>Pointer to the newly created <tt>LXPBlock</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>OUT_OF_MEMORY</tt> if memory allocation fails.</p>
+      <p><tt>OUT_OF_RANGE</tt> if index <tt>inBlockIdx</tt> is out of range.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inBlockIdx</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center"><tt>GetBlocksCount</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LArchiveFile* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>ui4</tt></p>
+      <p>Number of blocks in the archive file.</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+</table>
+<p>
+<p> 
+<hr>
+<h2><a name="fileformat"></a>Archive file format</h2>
+<p>In this section we describe the format of archive files created by component 
+  <tt>LArchiveFile</tt>.</p>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#999999"><b><font color="#FFFFFF">Section</font></b></td>
+    <td bgcolor="#999999"><b><font color="#FFFFFF">Size</font></b></td>
+    <td bgcolor="#999999"><b><font color="#FFFFFF">Offset</font></b></td>
+    <td bgcolor="#999999"><b><font color="#FFFFFF">Type</font></b></td>
+    <td bgcolor="#999999"><b><font color="#FFFFFF">Short description</font></b></td>
+    <td bgcolor="#999999"><b><font color="#FFFFFF">Notes</font></b></td>
+  </tr>
+  <tr> 
+    <td rowspan="3" align="center" bgcolor="#E6E6E6">Header</td>
+    <td bgcolor="#E6E6E6" rowspan="3" align="center">10</td>
+    <td bgcolor="#E6E6E6">0</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><b>ui4</b></p>
+    </td>
+    <td bgcolor="#E6E6E6">Magic number 0x4C4E4456</td>
+    <td bgcolor="#E6E6E6">Tag for file type identification (sequence of ASCII 
+      characters 'L', 'N', 'D', 'V', equal to <tt>LArchiveFile_MAGIC_NUMBER</tt>)</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6">4</td>
+    <td bgcolor="#E6E6E6"><b>ui2</b></td>
+    <td bgcolor="#E6E6E6">Version</td>
+    <td bgcolor="#E6E6E6">Version number of the format (equal to <tt>LArchiveFile_VERSION</tt>)</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6">6</td>
+    <td bgcolor="#E6E6E6"><b>ui4</b></td>
+    <td bgcolor="#E6E6E6">First block offset o<sub>1</sub></td>
+    <td bgcolor="#E6E6E6">Offset of the first block in the list of blocks (zero 
+      if archive file is empty)</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center">...</td>
+    <td bgcolor="#E6E6E6" align="center">...</td>
+    <td bgcolor="#E6E6E6">...</td>
+    <td bgcolor="#E6E6E6">...</td>
+    <td bgcolor="#E6E6E6">...</td>
+    <td bgcolor="#E6E6E6">...</td>
+  </tr>
+  <tr> 
+    <td align="center" bgcolor="#E6E6E6" rowspan="4">Block<br>
+      #1</td>
+    <td bgcolor="#E6E6E6" align="center">4</td>
+    <td bgcolor="#E6E6E6" rowspan="4">o<sub>1</sub></td>
+    <td bgcolor="#E6E6E6"><b>ui4</b></td>
+    <td bgcolor="#E6E6E6">Block tag</td>
+    <td bgcolor="#E6E6E6">Tag number</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center">4<sub></sub></td>
+    <td bgcolor="#E6E6E6"><b>ui4</b></td>
+    <td bgcolor="#E6E6E6"> Next block offset o<sub>2</sub></td>
+    <td bgcolor="#E6E6E6">Offset of the next block in the list of blocks (zero 
+      if last block)</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center">4</td>
+    <td bgcolor="#E6E6E6"><b>ui4</b></td>
+    <td bgcolor="#E6E6E6">Block size k<sub>1</sub></td>
+    <td bgcolor="#E6E6E6">Size in bytes of the block data</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center">k<sub>1</sub></td>
+    <td bgcolor="#E6E6E6">...</td>
+    <td bgcolor="#E6E6E6">Block data</td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center">...</td>
+    <td bgcolor="#E6E6E6" align="center">...</td>
+    <td bgcolor="#E6E6E6">...</td>
+    <td bgcolor="#E6E6E6">...</td>
+    <td bgcolor="#E6E6E6">...</td>
+    <td bgcolor="#E6E6E6">...</td>
+  </tr>
+  <tr> 
+    <td align="center" bgcolor="#E6E6E6" rowspan="4">Block<br>
+      #i</td>
+    <td bgcolor="#E6E6E6" align="center">4</td>
+    <td bgcolor="#E6E6E6" rowspan="4">o<sub>i</sub></td>
+    <td bgcolor="#E6E6E6"><b>ui4</b></td>
+    <td bgcolor="#E6E6E6">Block tag</td>
+    <td bgcolor="#E6E6E6">Tag number</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center">4<sub></sub></td>
+    <td bgcolor="#E6E6E6"><b>ui4</b></td>
+    <td bgcolor="#E6E6E6">Next block offset o<sub>i+1</sub></td>
+    <td bgcolor="#E6E6E6">Offset of the next block in the list of blocks (zero 
+      if last block)</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center">4</td>
+    <td bgcolor="#E6E6E6"><b>ui4</b></td>
+    <td bgcolor="#E6E6E6">Block size k<sub>i</sub></td>
+    <td bgcolor="#E6E6E6">Size in bytes of the block data</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center">k<sub>i</sub></td>
+    <td bgcolor="#E6E6E6">...</td>
+    <td bgcolor="#E6E6E6">Block data</td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+</table>
+
+<p><hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 12, 2001: created</li>
+  <li>Sep 7, 2002: updated</li>
+</ul>
+</body>
+</html>

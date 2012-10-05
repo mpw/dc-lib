@@ -1,0 +1,411 @@
+<html>
+    <head>
+        <title>LGraphGen</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    </head>
+    <body text="#000000" bgColor="#ffffff">
+        <h1>LGraphUtil</h1>
+        <table cellSpacing="1" cellPadding="2" width="100%" border="0">
+            <tr>
+                <td bgColor="#e6e6e6"><b>Description</b></td>
+                <td bgColor="#e6e6e6">Graph generators and utilities related to graphs.</td>
+            </tr>
+            <tr>
+                
+    <td bgColor="#e6e6e6"><b>Header file</b></td>
+                
+    <td bgColor="#e6e6e6"><tt>LGraphUtil.h</tt></td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Author</b></td>
+                
+    <td bgColor="#e6e6e6"><A href="mailto:thepomy@tin.it">Stefano Emiliozzi</A>, 
+      <a href="http://www.dis.uniroma1.it/%7Edemetres">Camil Demetrescu</a></td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Created</b></td>
+                <td bgColor="#e6e6e6">Feb 19, 2003</td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Last updated</b></td>
+                
+    <td bgColor="#e6e6e6">Sep 27, 2003</td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+        <h2>Contents</h2>
+        <ul>
+            <li>
+                <A href="#intro">Introduction</A>
+            <li>
+                <A href="#interface">Interface</A>
+            <li>
+                <A href="#apiref">API reference</A>
+            <li>
+                <A href="#history">Revision history</A></li></ul>
+        <hr>
+        <h2><b><a name="intro"></a>Introduction</b></h2>
+        This component contains a collection of utilities for creating and managing 
+<tt>LGraph</tt> objects. 
+<p>
+            <hr>
+            <h2><b><a name="interface"></a>Interface</b></h2>
+            <table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Functions</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"> 
+      <pre>LGraph*     LGraphUtil_RandomNM          (ui2 n, ui4 m, ui4 inSeed)
+LGraph*     LGraphUtil_RandomUNM         (ui2 n, ui4 m, ui4 inSeed)
+LGraph*     LGraphUtil_RandomNP          (ui2 n, f4 p, ui4 inSeed)
+LGraph*     LGraphUtil_RandomUNP         (ui2 n, f4 p, ui4 inSeed)
+LGraph*     LGraphUtil_Grid              (ui2 n, Bool inDirected)
+LGraph*     LGraphUtil_RandomClustered   (ui2 n, ui2 inC, f4 inPc, f4 inPi, ui4 inSeed, Bool inDirected)
+LEdgeInfo*  LGraphUtil_RndEdgeInfoUI4    (LGraph* inGraph, ui4 inA, ui4 inB, ui4 inSeed)
+void        LGraphUtil_AddCycle          (LGraph** thruGraph)
+Bool        LGraphUtil_LoadDimacs        (i1* inPathName, LGraph** outGraph, LEdgeInfo** outEdgeInfo, Bool inDirected)
+Bool        LGraphUtil_SaveDimacs        (i1* inPathName, LGraph* inGraph, LEdgeInfo* inEdgeInfo)
+Bool        LGraphUtil_LoadXML           (i1* inPathName, LGraph** outGraph, LEdgeInfo** outEdgeInfo, Bool inDirected)
+Bool        LGraphUtil_SaveXML           (i1* inPathName, LGraph* inGraph, LEdgeInfo* inEdgeInfo)
+LGraph*     LGraphUtil_PredToTree        (LGraph* inGraph, LNodeInfo* inPredArray, 
+                                          LNodeInfo** outTreeToGraph, LNodeInfo** outGraphToTree)
+LGraph*     LGraphUtil_CopyGraph         (LGraph* inGraph)
+LEdgeInfo*  LGraphUtil_CopyEdgeInfo      (LGraph* inGraph, LEdgeInfo* inEdgeInfo)
+LGraph*     LGraphUtil_ReverseGraph      (LGraph* inGraph)
+void        LGraphUtil_RemoveSelfLoops   (LGraph** thruGraph)</pre>
+                    </td>
+                </tr>
+            </table>
+            <p><hr>
+            <h2><a name="apiref"></a>API Reference</h2>
+            
+<p><table cellSpacing="1" cellPadding="4" width="100%">
+  <tr bgcolor="#bbbbbb"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">RandomNM</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+ui2 n
+ui4 m
+i4  inSeed</pre>
+      </td>
+    <td bgColor="#e6e6e6">Creates a random <b>directed</b> <tt>LGraph</tt> with 
+      n nodes and m edges. <tt>inSeed</tt> is the random number generator seed 
+      used to create the graph. <font color="#FF0000">Caller is responsible of 
+      deallocating the created object using <tt>LGraph_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LGraph*</tt></p>
+      <p>pointer to the newly created graph</p>
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">RandomUNM</font></tt></td>
+    <td bgcolor="#e6e6e6"> 
+      <pre>
+ui2 n
+ui4 m
+i4  inSeed</pre>
+    </td>
+    <td bgColor="#e6e6e6">Creates a random <b>undirected</b> <tt>LGraph</tt> with 
+      n nodes and m edges. <tt>inSeed</tt> is the random number generator seed 
+      used to create the graph.<font color="#FF0000"> Caller is responsible of 
+      deallocating the created object using <tt>LGraph_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LGraph*</tt></p>
+      <p>pointer to the newly created graph</p>
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">RandomNP</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+ui2 n
+f4  p
+i4  inSeed
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Creates a random <b>directed</b> <tt>LGraph</tt> with 
+      n nodes and approx. <tt>(p*n^2)</tt> edges; <tt>p</tt> is the probability 
+      to have an edge between each pair of nodes. <tt>inSeed</tt> is the random 
+      number generator seed used to create the graph.<font color="#FF0000"> Caller 
+      is responsible of deallocating the created object using <tt>LGraph_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LGraph*</tt></p>
+      <p>pointer to the newly created graph</p>
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">RandomUNP</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+ui2 n
+f4  p
+i4  inSeed
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Creates a random <b>undirected</b> <tt>LGraph</tt> with 
+      n nodes and approx. <tt>(p*n(n-1)/2)</tt> edges; <tt>p</tt> is the probability 
+      to have an edge between each pair of nodes. <tt>inSeed</tt> is the random 
+      number generator seed used to create the graph.<font color="#FF0000"> Caller 
+      is responsible of deallocating the created object using <tt>LGraph_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LGraph*</tt></p>
+      <p>pointer to the newly created graph</p>
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">RandomClustered</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+ui2  n
+ui2  inC
+f4   inPc
+f4   inPi
+ui4  inSeed
+Bool inDirected
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Returns a random <tt>LGraph</tt> with <tt>inN</tt> nodes 
+      and <tt>inC</tt> strongly connected clusters. There is an edge in the same 
+      cluster with probability <tt>inPc</tt>, and there is an edge between different 
+      clusters with probability <tt>inPi</tt>. To make sure that clusters are 
+      strongly connected, a cycle through all nodes in the cluster is added. <font color="#FF0000"> 
+      Caller is responsible of deallocating the created object using <tt>LGraph_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LGraph*</tt></p>
+      <p>pointer to the newly created graph</p>
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">RndEdgeInfoUI4</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+LGraph* inGraph
+ui4     inA
+ui4     inB
+i4      inSeed
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Creates a random <tt>LEdgeInfo</tt> associated to given 
+      <tt>inGraph</tt> with <tt>ui4</tt> values ranging from <tt>inA</tt> to <tt>inB</tt>. 
+      <font color="#FF0000"> Caller is responsible of deallocating the created 
+      object using <tt>LEdgeInfo_Delete</tt>.</font> </td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LEdgeInfo*</tt></p>
+      <p>pointer to the newly created LEdgeInfo</p>
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>AddCycle</tt></td>
+    <td bgColor="#e6e6e6" nowrap><tt>LGraph** thruGraph</tt></td>
+    <td bgColor="#e6e6e6">Adds a cycle between all nodes in the graph pointed 
+      to by <tt>*thruGraph</tt>.</td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>void</tt></p>
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">LoadDimacs</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+i1*         inPathName
+LGraph**    outGraph
+LEdgeInfo** outEdgeInfo
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Loads a file stored in DIMACS format. Puts in <tt>outGraph</tt> 
+      and in <tt>outEdgeInfo</tt> the pointers to the loaded structures. More 
+      information about DIMACS network file formats is available via anonymous 
+      ftp from <a href="ftp://dimacs.rutgers.edu/pub/netflow/general-info/specs.tex">ftp://dimacs.rutgers.edu/pub/netflow/general-info/specs.tex</a>. 
+      <font color="#FF0000">Caller is responsible of deallocating the created 
+      objects using <tt>LGraph_Delete</tt> and <tt>LEdgeInfo_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>Bool</tt></p>
+      <p>Returns <tt>TRUE</tt> if the parsing was succesful, <tt>FALSE</tt> otherwise. 
+      </p>
+      </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>SaveDimacs</tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+i1*        inPathName
+LGraph*    inGraph
+LEdgeInfo* inEdgeInfo
+</pre>
+    </td>
+    <td bgColor="#e6e6e6"> Saves graph <tt>inGraph</tt> with edge weights <tt>inEdgeInfo</tt> 
+      in a file in DIMACS format. More information about DIMACS network file formats 
+      is available via anonymous ftp from <a href="ftp://dimacs.rutgers.edu/pub/netflow/general-info/specs.tex">ftp://dimacs.rutgers.edu/pub/netflow/general-info/specs.tex</a>.</td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>Bool</tt></p>
+      <p>Returns <tt>TRUE</tt> if the saving was succesful, <tt>FALSE</tt> otherwise. 
+      </p>
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">LoadXML</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+i1*         inPathName
+LGraph**    outGraph
+LEdgeInfo** outEdgeInfo
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Loads a graph from a file stored in XML format. The 
+      file is parsed with the following <i>Document Type Definition</i>:<br>
+      <br>
+      <tt> <font size="-1">&lt;!DOCTYPE GRAPH [<br>
+      &lt;!ELEMENT GRAPH (EDGE*)&gt;<br>
+      &lt;!ATTLIST GRAPH<br>
+      &nbsp; &nbsp; label CDATA #IMPLIED<br>
+      &nbsp; &nbsp; nodes CDATA #REQUIRED<br>
+      &nbsp; &nbsp; edges CDATA #REQUIRED&gt;<br>
+      &lt;!ELEMENT EDGE EMPTY&gt;<br>
+      &lt;!ATTLIST EDGE<br>
+      &nbsp; &nbsp; label CDATA #IMPLIED<br>
+      &nbsp; &nbsp; weight CDATA #IMPLIED<br>
+      &nbsp; &nbsp; source CDATA #REQUIRED<br>
+      &nbsp; &nbsp; dest CDATA #REQUIRED&gt;<br>
+      ]&gt;</font><br>
+      </tt><br>
+      The pointers to the loaded structures are in <tt>*outGraph</tt> and in <tt>*outEdgeInfo</tt>. 
+      <font color="#FF0000">Caller is responsible of deallocating the created objects 
+      using <tt>LGraph_Delete</tt> and <tt>LEdgeInfo_Delete</tt>.</font> </td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>Bool</tt></p>
+      Returns <tt>TRUE</tt> if the parsing was succesful, <tt>FALSE</tt> otherwise. 
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>SaveXML</tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+i1*        inPathName
+LGraph*    inGraph
+LEdgeInfo* inEdgeInfo
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Saves a graph <tt>inGraph</tt> with edge weights <tt>inEdgeInfo</tt> 
+      in a file in XML format. The file is structured according to the following 
+      <i>Document Type Definition</i>:<br>
+      <br>
+      <tt> <font size="-1">&lt;!DOCTYPE GRAPH [<br>
+      &lt;!ELEMENT GRAPH (EDGE*)&gt;<br>
+      &lt;!ATTLIST GRAPH<br>
+      &nbsp; &nbsp; label CDATA #IMPLIED<br>
+      &nbsp; &nbsp; nodes CDATA #REQUIRED<br>
+      &nbsp; &nbsp; edges CDATA #REQUIRED&gt;<br>
+      &lt;!ELEMENT EDGE EMPTY&gt;<br>
+      &lt;!ATTLIST EDGE<br>
+      &nbsp; &nbsp; label CDATA #IMPLIED<br>
+      &nbsp; &nbsp; weight CDATA #IMPLIED<br>
+      &nbsp; &nbsp; source CDATA #REQUIRED<br>
+      &nbsp; &nbsp; dest CDATA #REQUIRED&gt;<br>
+      ]&gt; </font></tt><br>
+    </td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>Bool</tt></p>
+      <p>Returns <tt>TRUE</tt> if the operation was succesful, <tt>FALSE</tt> 
+        otherwise. </p>
+      </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">PredToTree</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+LGraph*     inGraph
+LNodeInfo*  inPredArray
+LNodeInfo** outTreeToGraph
+LNodeInfo** outGraphToTree
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Builds a subtree of <tt>inGraph</tt> according to predecessor 
+      array <tt>inPredArray</tt>: i.e., the tree has the same nodes as the graph, 
+      and there is an edge between node <tt>x</tt> and node <tt>y</tt> in the 
+      built tree if and only if <tt>x == (LGraph_TNode*) LNodeInfo_PtrAt(inPredArray, 
+      y)</tt>. If <tt>outTreeToGraph/outGraphToTree</tt> are not <tt>NULL</tt> 
+      upon call of the method, <tt>*outTreeToGraph</tt> will map Tree nodes-&gt;Graph 
+      nodes and <tt>*outGraphToTree</tt> will map Graph nodes-&gt;Tree nodes.<font color="#FF0000"> 
+      Caller is responsible of deallocating the created objects <tt>*outTreeToGraph</tt> 
+      and <tt>*outGraphToTree</tt> (if <tt>outTreeToGraph/outGraphToTree</tt> 
+      are not <tt>NULL</tt>) and the returned new graph using <tt>LNodeInfo_Delete</tt> 
+      and <tt>LGraph_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LGraph*</tt></p>
+      <p>Pointer to the created subtree</p>
+      </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">CopyGraph</font></tt></td>
+    <td bgColor="#e6e6e6"><tt>LGraph* inGraph</tt></td>
+    <td bgColor="#e6e6e6">Returns a graph that is the copy of <tt>inGraph</tt>. 
+      Information associated to edges and nodes is not copied. <font color="#FF0000">Caller 
+      is responsible of deallocating the created object using <tt>LGraph_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LGraph*</tt></p>
+      <p>Pointer to the created graph </p>
+      </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#FF0000">ReverseGraph</font></tt></td>
+    <td bgColor="#e6e6e6" nowrap><tt>LGraph* inGraph</tt></td>
+    <td bgColor="#e6e6e6">Returns a new graph obtained from <tt>inGraph</tt> by 
+      reversing the direction of each edge. If <tt>inGraph</tt> is undirected, 
+      the function returns <tt>NULL</tt>. <font color="#FF0000">Caller is responsible 
+      of deallocating the created object using <tt>LGraph_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LGraph*</tt></p>
+      <p>Pointer to the created graph </p>
+      </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>RemoveSelfLoops</tt></td>
+    <td bgColor="#e6e6e6" nowrap><tt>LGraph** thruGraph</tt></td>
+    <td bgColor="#e6e6e6">Removes all the self loops in <tt>*thruGraph</tt>. It 
+      works on both undirected and directed graphs.</td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>void</tt></p>
+    </td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+</table>
+        <p>
+            <hr>
+            <h2><a name="history"></a>Revision history</h2>
+            
+<ul>
+  <li> Feb 19, 2003: created. 
+  <li> Mar 05, 2003: added <tt>BuildShortestPathTree</tt> 
+  <li> Apr 14, 2003: added <tt>LoadXML</tt>, <tt>SaveXML</tt> 
+  <li> May 10, 2003: added <tt>RemoveSelfLoops</tt> 
+  <li> May 14, 2003: changed <tt>inSeed</tt> from <tt>ui4</tt> to <tt>i4</tt>. 
+    Added <tt>inSeed</tt> to <tt>RndEdgeInfoUI4</tt></li>
+  <li>Sep 27, 2003: updated.</li>
+</ul>
+            </body>
+</html>

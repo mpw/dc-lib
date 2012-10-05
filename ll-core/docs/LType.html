@@ -1,0 +1,205 @@
+<html>
+<head>
+<title>LType</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LType</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Intrinsic numeric types and low-level general-purpose 
+      macros </td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LType.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dis.uniroma1.it/%7Edemetres">Camil 
+      Demetrescu</a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">October 10, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Sep 25, 2003</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>LType_ID
+    
+NULL
+TRUE
+FALSE
+   
+LType_MAX_UI1
+LType_MAX_UI2
+LType_MAX_UI4
+LType_MIN_I1
+LType_MAX_I1
+LType_MIN_I2
+LType_MAX_I2
+LType_MIN_I4
+LType_MAX_I4
+LType_MIN_F4
+LType_MAX_F4
+LType_MIN_F8
+LType_MAX_F8</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Intrinsic Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td width="8%"> 
+      <pre>i1</pre>
+    </td>
+    <td width="92%"> signed 8 bit integer</td>
+  </tr>
+  <tr> 
+    <td width="8%"> 
+      <pre>ui1</pre>
+    </td>
+    <td width="92%"> unsigned 8 bit integer</td>
+  </tr>
+  <tr> 
+    <td width="8%"> 
+      <pre>i2</pre>
+    </td>
+    <td width="92%"> signed 16 bit integer</td>
+  </tr>
+  <tr> 
+    <td width="8%"> 
+      <pre>ui2</pre>
+    </td>
+    <td width="92%"> unsigned 16 bit integer</td>
+  </tr>
+  <tr> 
+    <td width="8%"> 
+      <pre>i4</pre>
+    </td>
+    <td width="92%"> signed 32 bit integer</td>
+  </tr>
+  <tr> 
+    <td width="8%"> 
+      <pre>ui4</pre>
+    </td>
+    <td width="92%"> unsigned 32 bit integer</td>
+  </tr>
+  <tr> 
+    <td width="8%"> 
+      <pre>f4</pre>
+    </td>
+    <td width="92%"> 32 bit floating point</td>
+  </tr>
+  <tr> 
+    <td width="8%"> 
+      <pre>f8</pre>
+    </td>
+    <td width="92%"> 64 bit floating point</td>
+  </tr>
+  <tr> 
+    <td width="8%"> 
+      <pre>Bool </pre>
+    </td>
+    <td width="92%"> Boolean</td>
+  </tr>
+</table>
+<p><table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>enum LType_TTypeID
+struct {<br>    LType_TTypeID mID;<br>    ui4           mSize;<br>} LType_TType</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB"> 
+      <h4>Variables</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <pre>LType_TType LType_UI1
+LType_TType LType_UI2
+LType_TType LType_UI4
+LType_TType LType_I1
+LType_TType LType_I2
+LType_TType LType_I4
+LType_TType LType_F4
+LType_TType LType_F8
+LType_TType LType_Bool
+LType_TType LType_Ptr</pre>
+      </td>
+  </tr>
+</table>
+<p> 
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Macros</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+_i1_(a)                (*( i1*)(a))
+_ui1_(a)               (*(ui1*)(a))
+_i2_(a)                (*( i2*)(a))
+_ui2_(a)               (*(ui2*)(a))
+_i4_(a)                (*( i4*)(a))
+_ui4_(a)               (*(ui4*)(a))
+_f4_(a)                (*( f4*)(a))
+_f8_(a)                (*( f8*)(a))
+    
+Mem_(type,addr)        ( (type*)(addr))
+AtMem_(type,addr)      (*(type*)(addr))
+   
+SwapN2_(n)
+SwapN4_(n)
+</pre>
+    </td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 19, 2000: created<tt></tt>.</li>
+  <li>Sep 26, 2003: updated.</li>
+</ul>
+</body>
+</html>

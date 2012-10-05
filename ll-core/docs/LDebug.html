@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>LDebug</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LDebug</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Debugging support</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LDebug.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dis.uniroma1.it/%7Edemetres">Camil 
+      Demetrescu </a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Dec 19, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Sep 24, 2003</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#intro">Introduction</a></li>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="intro"></a>Introduction</b></h2>
+<p><span lang="it">The component </span> <tt>LDebug</tt> provides support for 
+  reading and sending debugging messages to the standard console (to elsewhere) 
+  and for terminating the program abnormally.</p>
+<hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LDebug_ID
+LDebug_INTERNAL_ERROR
+</pre>
+    </td>
+  </tr>
+</table>
+<p><table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+void (*LDebug_THandler) (const i1* inMessage);
+</pre>
+    </td>
+  </tr>
+</table>
+<p> 
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+void        LDebug_GetString           (i1* outStr, ui4 inSize);
+void        LDebug_Print               (const i1* inMsg, ...);
+void        LDebug_Write               (const i1* inMsg, ui4 inSize);
+void        LDebug_Exit                ();
+void        LDebug_InstallPrintHandler (LDebug_THandler inHandler);
+void        LDebug_OpenBlock           ();
+void        LDebug_CloseBlock          (i1** outBlock, ui4* outSize);
+</pre>
+    </td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p> 
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>GetString</tt></td>
+    <td bgcolor="#E6E6E6"><tt>i1* outStr</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Read at most <tt>inSize</tt> characters 
+      from the console, stopping when a newline is found, and copy them to buffer 
+      <tt>outStr</tt> as a C string. The newline, if any, is not copied to <tt>outStr</tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>-</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>Print</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inMsg</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p>Send to the debugging console message <tt>inMsg</tt>, which can be a 
+        format string followed by a variable number or arguments as in the C <tt>printf</tt> 
+        family functions. We recommend using the following specifiers on a 32-bit 
+        data model, i.e., on platforms where <tt>sizeof(long)==4</tt>:</p>
+      <p> 
+      <table width="40%" border="0" cellspacing="1" cellpadding="2">
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">i1</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%c</tt>, or<tt> %hd</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">ui1</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%c</tt>, or<tt> %hu</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">i2</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%hd</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">ui2</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%hu</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">i4</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%ld</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">ui4</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%lu</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">f4</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%f</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">f8</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%Lf</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">i1*</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%s</tt></td>
+        </tr>
+      </table>
+      <p><i>Example:</i></p>
+      <pre>
+ui4 theCode     = 27;
+i1  theChannel  = 'k';
+LDebug_Print("Opening stream %lu at channel %c\n", theCode, theChannel);
+      </pre>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>-</tt></p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>...</tt></td>
+  </tr>
+  <tr bgcolor="#E6E6E6"> 
+    <td rowspan="2"><tt>Write</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inMsg</tt></td>
+    <td rowspan="2">Writes to the debugging console message <tt>inMsg</tt> of 
+      size <tt>inSize</tt> (in bytes)</td>
+    <td rowspan="2"><tt>-</tt></td>
+    <td rowspan="2"><tt>-</tt></td>
+  </tr>
+  <tr bgcolor="#E6E6E6"> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr bgcolor="#E6E6E6"> 
+    <td> 
+      <p><tt>Exit </tt> 
+    </td>
+    <td> 
+      <p><tt>- </tt> 
+    </td>
+    <td> 
+      <p>Stop executing the program. 
+    </td>
+    <td> 
+      <p><tt>- </tt>
+    </td>
+    <td> 
+      <p><tt>- </tt>
+    </td>
+  </tr>
+  <tr bgcolor="#E6E6E6"> 
+    <td> 
+      <p><tt>InstallPrintHandler </tt> 
+    </td>
+    <td> 
+      <p><tt>LDebug_THandler inHandler </tt> 
+    </td>
+    <td> 
+      <p>Installs a handler that is called upon invocation of <tt>Print</tt> and 
+        <tt>Write</tt> and receives the message as a C string. This can be useful 
+        to send messages to a place different from the standard debugging console. 
+        If <tt>inHandler</tt> is <tt>NULL</tt>, the default behavior is restored. 
+    </td>
+    <td> 
+      <p><tt>- </tt>
+    </td>
+    <td> 
+      <p><tt>- </tt>
+    </td>
+  </tr>
+  <tr bgcolor="#E6E6E6"> 
+    <td><tt>OpenBlock</tt></td>
+    <td><tt>-</tt></td>
+    <td>Starts collecting messages in an internal data block instead of sending 
+      them to the debugging console. See also <tt>CloseBlock</tt>.</td>
+    <td> 
+      <p><tt>- </tt>
+    </td>
+    <td> 
+      <p><tt>- </tt>
+    </td>
+  </tr>
+  <tr bgcolor="#E6E6E6"> 
+    <td rowspan="2"><tt><font color="#FF0000">CloseBlock</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>i1** outBlock</tt></td>
+    <td rowspan="2">Stops collecting messages and passes back in <tt>*outBlock</tt> 
+      the messages collected since the call of <tt>OpenBlock</tt>. The size of 
+      the created block is written to <tt>*outSize</tt>. <font color="#FF0000">Caller 
+      is responsible of dellocating the created clock using <tt>LMemory_Free</tt>.</font></td>
+    <td rowspan="2"><tt>-</tt></td>
+    <td rowspan="2"><tt>-</tt></td>
+  </tr>
+  <tr bgcolor="#E6E6E6"> 
+    <td bgcolor="#E6E6E6"><tt>ui4* outSize</tt></td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 19, 2001: created</li>
+  <li>Sep 24, 2003: revised</li>
+</ul>
+</body>
+</html>
