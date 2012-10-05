@@ -1,0 +1,9 @@
+# include common configurations
+@INCLUDE = common_config
+
+# The ENABLED_SECTIONS tag can be used to enable conditional
+# documentation sections, marked by \if sectionname ... \endif.
+
+GENERATE_HTML     = YES
+ENABLED_SECTIONS += HTML
+HTML_STYLESHEET   = dc.css

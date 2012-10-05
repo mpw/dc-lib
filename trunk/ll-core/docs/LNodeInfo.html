@@ -1,0 +1,336 @@
+<html>
+    <head>
+        <title>LNodeInfo</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    </head>
+    <body text="#000000" bgColor="#ffffff">
+        <h1>LNodeInfo</h1>
+        <table cellSpacing="1" cellPadding="2" width="100%" border="0">
+            <tr>
+                <td bgColor="#e6e6e6"><b>Description</b></td>
+                <td bgColor="#e6e6e6">Data associated to nodes of a graph</td>
+            </tr>
+            <tr>
+                
+    <td bgColor="#e6e6e6"><b>Header file</b></td>
+    <td bgColor="#e6e6e6"><tt>LNodeInfo.h</tt></td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Author</b></td>
+                <td bgColor="#e6e6e6"><A href="mailto:thepomy@tin.it">Stefano Emiliozzi</A>, <A href="http://www.dis.uniroma1.it/~demetres">
+                        Camil Demetrescu</A></td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Created</b></td>
+                <td bgColor="#e6e6e6">Jan 17, 2003</td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Last updated</b></td>
+                
+    <td bgColor="#e6e6e6">Sep 26, 2003</td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+        <h2>Contents</h2>
+        <ul>
+            <li>
+                <A href="#intro">Introduction</A>
+            <li>
+                <A href="#interface">Interface</A>
+            <li>
+                <A href="#apiref">API reference</A>
+            <li>
+                <A href="#history">Revision history</A></li></ul>
+        <hr>
+        <h2><b><a name="intro"></a>Introduction</b></h2>
+        The component <tt>LNodeInfo</tt> is used to associate data to nodes of 
+a graph; each graph is represented using component <tt>LGraph</tt> and can have 
+multiple <tt>LNodeInfo</tt> associated, but a <tt>LNodeInfo</tt> can be associated 
+only to one <tt>LGraph</tt>. 
+<p>
+            <hr>
+            <h2><b><a name="interface"></a>Interface</b></h2>
+            <table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Constants</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"><tt>LNodeInfo_ID<br>
+                            LNodeInfo_BASE_TYPE_MISMATCH</tt>
+                    </td>
+                </tr>
+            </table>
+            <p><table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Types</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"> 
+      <pre>LNodeInfo
+void (*LNodeInfo_THandler)(LNodeInfo* This, LGraph_TNode* inNode)</pre>
+    </td>
+                </tr>
+            </table>
+            <p>
+<table cellSpacing="1" cellPadding="4" width="100%" border="0">
+  <tr> 
+    <td bgColor="#bbbbbb" colSpan="2"> 
+      <h4>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colSpan="2"> 
+      <pre>LNodeInfo*  LNodeInfo_New                   (LGraph* inGraph, LType_TType inType)<br>LNodeInfo*  LNodeInfo_NewCustom             (LGraph* inGraph, ui4 inItemSize)<br>void        LNodeInfo_Delete                (LNodeInfo** ThisA)<br>void        LNodeInfo_AssignItemAt          (LNodeInfo* This, LGraph_TNode* inNode, const void* inItem)<br>Bool        LNodeInfo_FetchItemAt           (LNodeInfo* This, LGraph_TNode* inNode, void* outItem)<br>void        LNodeInfo_InstallDelNodeHandler (LNodeInfo* This, LNodeInfo_THandler inDealloc)<br>void        LNodeInfo_InstallNewNodeHandler (LNodeInfo* This, LNodeInfo_THandler inAlloc)<br>LType_TType LNodeInfo_GetBaseType           (LNodeInfo* This)<br>ui4         LNodeInfo_GetUsedMem            (LNodeInfo* This)</pre>
+    </td>
+  </tr>
+</table>
+            
+<p>
+<table cellspacing="1" cellpadding="4" width="100%" border="0">
+  <tr> 
+    <td bgcolor="#bbbbbb" colspan="2"> 
+      <h4>Macros</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LNodeInfo_UI1At     (LNodeInfo* This, LGraph_TNode* inNode)
+LNodeInfo_UI2At     (LNodeInfo* This, LGraph_TNode* inNode)
+LNodeInfo_UI4At     (LNodeInfo* This, LGraph_TNode* inNode)
+LNodeInfo_I1At      (LNodeInfo* This, LGraph_TNode* inNode)
+LNodeInfo_I2At      (LNodeInfo* This, LGraph_TNode* inNode)
+LNodeInfo_I4At      (LNodeInfo* This, LGraph_TNode* inNode)
+LNodeInfo_F4At      (LNodeInfo* This, LGraph_TNode* inNode)
+LNodeInfo_F8At      (LNodeInfo* This, LGraph_TNode* inNode)
+LNodeInfo_BoolAt    (LNodeInfo* This, LGraph_TNode* inNode)
+LNodeInfo_PointerAt (LNodeInfo* This, LGraph_TNode* inNode)
+</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<hr>
+            <h2><a name="apiref"></a>API Reference</h2>
+            
+<table cellspacing="1" cellpadding="4" width="100%">
+  <tr bgcolor="#bbbbbb"> 
+    <td><b>Macro</b></td>
+    <td bgcolor="#bbbbbb"><b>Arguments</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>UI1At</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>ui1</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>UI2At</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>ui2</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>UI4At</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>ui4</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>I1At</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>i1</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>I2At</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>i2</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>I4At</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>i4</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>F4At</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>f4</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>F8At</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>f8</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>BoolAt</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>Bool</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6"> 
+      <pre>PointerAt</pre>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>LNodeInfo* This, LGraph_TNode* inNode</tt></td>
+    <td bgcolor="#e6e6e6"><tt>void*</tt> lvalue associated to node <tt>inNode</tt></td>
+  </tr>
+</table>
+<br>
+            
+<table cellSpacing="1" cellPadding="4" width="100%">
+  <tr bgcolor="#bbbbbb"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#ff0000">New</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+LGraph*      inGraph
+LType_TType* inType
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Creates an object containing a nodeinfo associated to 
+      <tt>inGraph</tt>. The base type of the information is given by the value 
+      of <tt>inType</tt>. The constructor makes room for all the node of the graph.<font color="#ff0000"> 
+      Caller is responsible of dellocating the created object using <tt>LNodeInfo_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LNodeInfo*</tt></p>
+      <p>pointer to the newly created object</p>
+    </td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#ff0000">NewCustom</font></tt></td>
+    <td bgColor="#e6e6e6"> 
+      <pre>
+LGraph* inGraph
+ui4     inItemSize
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Creates an object containing a nodeinfo associated to 
+      <tt>inGraph</tt>. The base type size of the information is given by the 
+      value of <tt>inItemSize</tt>. The constructor makes room for all the nodes 
+      of the graph.<font color="#ff0000"> Caller is responsible of dellocating 
+      the created object using <tt>LNodeInfo_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LNodeInfo*</tt></p>
+      <p>pointer to the newly created object</p>
+    </td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>Delete</tt></td>
+    <td bgColor="#e6e6e6"><tt>LNodeInfo** ThisA</tt></td>
+    <td bgColor="#e6e6e6">Releases object <tt>*ThisA</tt>. <tt>*ThisA</tt> is 
+      set to <tt>NULL</tt>. </td>
+    <td bgColor="#e6e6e6"><tt>void</tt></td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>AssignItemAt</tt></td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>
+LNodeInfo*    This
+LGraph_TNode* inNode
+const void*   inItem
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Assigns the data pointed by <tt>inItem</tt> to the node 
+      <tt>inNode</tt></td>
+    <td bgColor="#e6e6e6"><tt>void</tt></td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>FetchItemAt</tt></td>
+    <td noWrap bgColor="#e6e6e6"> 
+      <pre>
+LNodeInfo*    This
+LGraph_TNode* inNode
+void*         outItem
+</pre>
+    </td>
+    <td bgColor="#e6e6e6">Puts the data associated to node <tt>inNode</tt> to 
+      the memory pointed by <tt>outItem</tt>. It returns TRUE is the data in <tt>outItem</tt> 
+      are valid, FALSE otherwise</td>
+    <td bgColor="#e6e6e6"><tt>Bool</tt></td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6" height="39"><tt>InstallDelNodeHandler</tt></td>
+    <td noWrap bgcolor="#e6e6e6" height="39"> 
+      <pre>LNodeInfo*         This
+LNodeInfo_THandler inDealloc</pre>
+    </td>
+    <td bgcolor="#e6e6e6" height="39">Installs a handler that is executed whenever 
+      a node is removed from the graph associated with This. The handler is called 
+      before removing the node.</td>
+    <td bgcolor="#e6e6e6" height="39">-</td>
+    <td bgcolor="#e6e6e6" height="39">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#e6e6e6" height="39"><tt>InstallNewNodeHandler</tt></td>
+    <td noWrap bgcolor="#e6e6e6" height="39"> 
+      <pre>LNodeInfo*         This
+LNodeInfo_THandler inAlloc</pre>
+    </td>
+    <td bgcolor="#e6e6e6" height="39">Installs a handler that is executed whenever 
+      a new node is added to the graph associated with This. The handler is called 
+      after the node has been inserted.</td>
+    <td bgcolor="#e6e6e6" height="39">-</td>
+    <td bgcolor="#e6e6e6" height="39">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>GetBaseType</tt></td>
+    <td noWrap bgColor="#e6e6e6"><tt>LNodeInfo* This</tt></td>
+    <td bgColor="#e6e6e6">Returns the base type of the <tt>LNodeInfo</tt></td>
+    <td bgColor="#e6e6e6"><tt>LType_TType</tt></td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>GetUsedMem</tt></td>
+    <td noWrap bgColor="#e6e6e6"><tt>LNodeInfo* This</tt></td>
+    <td bgColor="#e6e6e6">Returns the total memory usage the object.</td>
+    <td bgColor="#e6e6e6"><tt>ui4</tt></td>
+    <td bgColor="#e6e6e6">-</td>
+  </tr>
+</table>
+        <p>
+            <hr>
+            <h2><a name="history"></a>Revision history</h2>
+            
+<ul>
+  <li> Jan 17, 2003: created 
+  <li> Jan 19, 2003: added the exception <tt>LNodeInfo_BASE_TYPE_MISMATCH</tt> 
+  <li> Jan 20, 2003: changed <tt>LNodeInfo_ItemAt()</tt> from function to macro, 
+    to speed up access 
+  <li> Mar 04, 2003: added <tt>LNodeInfo_GetBaseType()</tt> 
+  <li> Mar 18, 2003: added <tt>LNodeInfo_GetUsedMem()</tt></li>
+  <li>Sep 26, 2003: updated.</li>
+</ul>
+            </body>
+</html>

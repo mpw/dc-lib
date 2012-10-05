@@ -1,0 +1,184 @@
+<html>
+    <head>
+        <title>LEdgeMap</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    </head>
+    <body text="#000000" bgColor="#ffffff">
+        <h1>LEdgeMap</h1>
+        <table cellSpacing="1" cellPadding="2" width="100%" border="0">
+            <tr>
+                <td bgColor="#e6e6e6"><b>Description</b></td>
+                <td bgColor="#e6e6e6">Used to map the edges of a graph</td>
+            </tr>
+            <tr>
+                
+    <td bgColor="#e6e6e6"><b>Header file</b></td>
+                
+    <td bgColor="#e6e6e6"><tt>LEdgeMap.h</tt></td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Author</b></td>
+                <td bgColor="#e6e6e6"><A href="mailto:thepomy@tin.it">Stefano Emiliozzi</A>, <A href="http://www.dis.uniroma1.it/~demetres">
+                        Camil Demetrescu</A></td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Created</b></td>
+                <td bgColor="#e6e6e6">Mar 18, 2003</td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Last updated</b></td>
+                
+    <td bgColor="#e6e6e6">Sep 24, 2003</td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+        <h2>Contents</h2>
+        <ul>
+            <li>
+                <A href="#intro">Introduction</A>
+            <li>
+                <A href="#interface">Interface</A>
+            <li>
+                <A href="#apiref">API reference</A>
+            <li>
+                <A href="#history">Revision history</A></li></ul>
+        <hr>
+        <h2><b><a name="intro"></a>Introduction</b></h2>
+        The component <tt>LEdgeMap</tt> provides a series of useful functions 
+to access the edges of a graph. The user can know in O(1) time whether an edge 
+belongs to a graph and can also obtain it. 
+<p>
+            <hr>
+            <h2><b><a name="interface"></a>Interface</b></h2>
+            <table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Constants</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"><tt>LEdgeMap_ID<br>
+                            LEdgeMap_OBJECT_NULL_POINTER<br>
+                            LEdgeMap_GRAPH_NULL_POINTER<br>
+      LEdgeMap_NODE_NULL_POINTER</tt></td>
+                </tr>
+            </table>
+            <p><table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Types</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"><tt>LEdgeMap</tt></td>
+                </tr>
+            </table>
+            <p><table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Functions</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"> 
+      <pre>
+LEdgeMap*     LEdgeMap_New        (LGraph* inGraph)
+void          LEdgeMap_Delete     (LEdgeMap** ThisA)
+Bool          LEdgeMap_EdgeExists (LEdgeMap* This, LGraph_TNode* inSrc, LGraph_TNode* inDst)
+LGraph_TEdge* LEdgeMap_GetEdge    (LEdgeMap* This, LGraph_TNode* inSrc, LGraph_TNode* inDst)
+ui4           LEdgeMap_GetUsedMem (LEdgeMap* This)
+</pre>
+                    </td>
+                </tr>
+            </table>
+            <p><hr>
+            <h2><a name="apiref"></a>API Reference</h2>
+            
+<table cellSpacing="1" cellPadding="4" width="100%">
+  <tr bgcolor="#bbbbbb"> 
+    <td><b>Function</b></td>
+                    
+    <td><b>Arguments</b></td>
+                    
+    <td><b>Description</b></td>
+                    
+    <td><b>Returns</b></td>
+                    
+    <td><b>Throws</b></td>
+                </tr>
+                <tr>
+                    <td bgColor="#e6e6e6"><tt><font color="#ff0000">New</font></tt></td>
+                    <td bgColor="#e6e6e6" nowrap><tt>LGraph* inGraph</tt></td>
+                    <td bgColor="#e6e6e6">Creates an object containing an <tt>LEdgeMap</tt> associated 
+                     to <tt>inGraph</tt>.<font color="#ff0000"> Caller is responsible of dellocating the 
+                     created object using <tt>LEdgeMap_Delete</tt>.</font></td>
+                    <td bgColor="#e6e6e6">
+                        <p><tt>LEdgeMap*</tt></p>
+                        <p>pointer to the newly created object</p>
+                    </td>
+                    <td bgColor="#e6e6e6"><tt>GRAPH_NULL_POINTER</tt> if <tt>inGraph</tt> is <tt>NULL</tt></td>
+                </tr>
+                <tr>
+                    <td bgColor="#e6e6e6"><tt>Delete</tt></td>
+                    <td bgColor="#e6e6e6"><tt>LEdgeMap** ThisA</tt></td>
+                    <td bgColor="#e6e6e6">Releases object <tt>*ThisA</tt>. <tt>*ThisA</tt> is set to <tt>NULL</tt>.
+                    </td>
+                    <td bgColor="#e6e6e6"><tt>void</tt></td>
+                    <td bgColor="#e6e6e6"><tt>OBJECT_NULL_POINTER</tt> if <tt>ThisA</tt> or <tt>*ThisA</tt>
+                        are <tt>NULL</tt></td>
+                </tr>
+                <tr>
+                    <td bgColor="#e6e6e6"><tt>LEdgeMap_EdgeExists</tt></td>
+                    <td bgColor="#e6e6e6">
+<pre>
+LEdgeMap*     This
+LGraph_TNode* inSrc
+LGraph_TNode* inDst
+</pre>
+                    </td>
+                    <td bgColor="#e6e6e6">Returns <tt>TRUE</tt> if there's an edge between <tt>inSrc</tt>
+                        and <tt>inDst</tt>, <tt>FALSE</tt> otherwise.
+                    </td>
+                    <td bgColor="#e6e6e6"><tt>Bool</tt></td>
+                    <td bgColor="#e6e6e6"><tt>OBJECT_NULL_POINTER</tt> if <tt>This</tt> is <tt>NULL</tt><br>
+                        <tt>NODE_NULL_POINTER</tt> if <tt>inSrc</tt> or <tt>inDst</tt> are <tt>NULL</tt>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgColor="#e6e6e6"><tt>LEdgeMap_GetEdge</tt></td>
+                    <td bgColor="#e6e6e6">
+<pre>
+LEdgeMap*     This
+LGraph_TNode* inSrc
+LGraph_TNode* inDst
+</pre>
+                    </td>
+                    <td bgColor="#e6e6e6">Returns the edge between <tt>inSrc</tt> and <tt>inDst</tt>, <tt>NULL</tt>
+                        if there's no edge.
+                    </td>
+                    <td bgColor="#e6e6e6"><tt>LGraph_TEdge*</tt></td>
+                    <td bgColor="#e6e6e6"><tt>OBJECT_NULL_POINTER</tt> if <tt>This</tt> is <tt>NULL</tt><br>
+                        <tt>NODE_NULL_POINTER</tt> if <tt>inSrc</tt> or <tt>inDst</tt> are <tt>NULL</tt>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgColor="#e6e6e6"><tt>LEdgeMap_GetUsedMem</tt></td>
+                    <td noWrap bgColor="#e6e6e6"><tt>LEdgeMap* This</tt></td>
+                    
+    <td bgColor="#e6e6e6">Returns the total memory usage of object <tt>This</tt>.</td>
+                    <td bgColor="#e6e6e6"><tt>ui4</tt></td>
+                    <td bgColor="#e6e6e6"><tt>OBJECT_NULL_POINTER</tt> if <tt>This</tt> is <tt>NULL</tt></td>
+                </tr>
+            </table>
+        <p>
+            <hr>
+            <h2><a name="history"></a>Revision history</h2>
+            
+<ul>
+  <li> Mar 18, 2003: created</li>
+</ul>
+            </body>
+</html>

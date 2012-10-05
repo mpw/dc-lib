@@ -1,0 +1,227 @@
+<html>
+<head>
+<title>LSort</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LSort</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Sorting algorithms</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LSort.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dis.uniroma1.it/%7Edemetres">Camil Demetrescu</a>, <a href="http://www.dsi.uniroma1.it/%7Efinocchi">Irene Finocchi</a>, <a href="mailto:f.iovine@email.it?subject=LL">Francesco Iovine</a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Nov 25, 2003</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Nov 23, 2005</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#example">Example</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>LSort_ID
+</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2">
+      <h4>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2">
+      <pre>void LSort_Selection (void* inItems, ui4 inItemsCount, LType_TType inItemType);
+void LSort_Insertion (void* inItems, ui4 inItemsCount, LType_TType inItemType);
+void LSort_Bubble    (void* inItems, ui4 inItemsCount, LType_TType inItemType);
+void LSort_RecMerge  (void* inItems, ui4 inItemsCount, LType_TType inItemType);
+void LSort_IterMerge (void* inItems, ui4 inItemsCount, LType_TType inItemType);
+void LSort_RecQuick  (void* inItems, ui4 inItemsCount, LType_TType inItemType);
+void LSort_Shell     (void* inItems, ui4 inItemsCount, LType_TType inItemType);
+</pre>
+    </td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p> 
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+				<td><b>Throws</b></td>
+			</tr>
+  
+  <tr>
+    <td bgcolor="#E6E6E6" rowspan="3">Selection</td>
+    <td bgcolor="#E6E6E6"><tt>void* inItems</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Works on <tt>inItemsCount</tt> items with 
+      type descriptor <tt>inItemType</tt> contained in the array pointed to by 
+      <tt>inItems</tt>.<br> 
+      Sorts the array using selectionSort.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+				<td bgcolor="#E6E6E6" rowspan="3">-</td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>ui4 inItemsCount</tt></td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>LType_TType inItemType</tt></td>
+			</tr>
+	<tr>
+    <td bgcolor="#E6E6E6" rowspan="3">Insertion</td>
+    <td bgcolor="#E6E6E6"><tt>void* inItems</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Works on <tt>inItemsCount</tt> items with 
+      type descriptor <tt>inItemType</tt> contained in the array pointed to by 
+      <tt>inItems</tt>.<br> 
+      Sorts the array using insertionSort.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+				<td bgcolor="#E6E6E6" rowspan="3">-</td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>ui4 inItemsCount</tt></td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>LType_TType inItemType</tt></td>
+			</tr>
+	<tr>
+    <td bgcolor="#E6E6E6" rowspan="3">Bubble</td>
+    <td bgcolor="#E6E6E6"><tt>void* inItems</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Works on <tt>inItemsCount</tt> items with 
+      type descriptor <tt>inItemType</tt> contained in the array pointed to by 
+      <tt>inItems</tt>.<br> 
+      Sorts the array using bubbleSort.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+				<td bgcolor="#E6E6E6" rowspan="3">-</td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>ui4 inItemsCount</tt></td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>LType_TType inItemType</tt></td>
+			</tr>
+	<tr>
+    <td bgcolor="#E6E6E6" rowspan="3">RecMerge</td>
+    <td bgcolor="#E6E6E6"><tt>void* inItems</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Works on <tt>inItemsCount</tt> items with 
+      type descriptor <tt>inItemType</tt> contained in the array pointed to by 
+      <tt>inItems</tt>.<br>Sorts the array using the recursive implementation of Mergesort.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+				<td bgcolor="#E6E6E6" rowspan="3">-</td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>ui4 inItemsCount</tt></td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>LType_TType inItemType</tt></td>
+			</tr>
+	<tr>
+    <td bgcolor="#E6E6E6" rowspan="3">IterMerge</td>
+    <td bgcolor="#E6E6E6"><tt>void* inItems</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Works on <tt>inItemsCount</tt> items with 
+      type descriptor <tt>inItemType</tt> contained in the array pointed to by 
+      <tt>inItems</tt>.<br>Sorts the array using the iterative bottom-up implementation of Mergesort.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+				<td bgcolor="#E6E6E6" rowspan="3">-</td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>ui4 inItemsCount</tt></td>
+			</tr>
+	<tr>
+				<td bgcolor="#E6E6E6"><tt>LType_TType inItemType</tt></td>
+			</tr>
+	<tr>
+    <td bgcolor="#E6E6E6" rowspan="3">RecQuick</td>
+    <td bgcolor="#E6E6E6"><tt>void* inItems</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Works on <tt>inItemsCount</tt> items with 
+      type descriptor <tt>inItemType</tt> contained in the array pointed to by 
+      <tt>inItems</tt>.<br>Sorts the array using Quicksort. The pivot is chosen as the median of three randomly chosen items.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+				<td bgcolor="#E6E6E6" rowspan="3">-</td>
+			</tr>
+<tr>
+				<td bgcolor="#E6E6E6"><tt>ui4 inItemsCount</tt></td>
+			</tr>
+			<tr>
+				<td bgcolor="#E6E6E6"><tt>LType_TType inItemType</tt></td>
+			</tr>
+<tr> 
+    <td bgcolor="#E6E6E6" rowspan="3">Shell</td>
+    <td bgcolor="#E6E6E6"><tt>void* inItems</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Works on <tt>inItemsCount</tt> items with 
+      type descriptor <tt>inItemType</tt> contained in the array pointed to by 
+      <tt>inItems</tt>.<br>Sorts the array using Shellsort. The decreasing sequence of step sizes is n/2, n/4, n/8, ..., 2, 1.</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inItemsCount</tt></td>
+  </tr>
+  <tr>
+				<td bgcolor="#E6E6E6"><tt>LType_TType inItemType</tt></td>
+			</tr>			</table>
+<hr>
+<h2><a name="example"></a>Example</h2>
+<blockquote>
+  <pre>#include &quot;LSort.h&quot;
+#include &quot;LSystem.h&quot;
+
+int main(){
+    ui4 i, k = 5, theItems[11] = { 34, 12, 6, 9, 33, 11, 4, 3, 11, 23, 26 };
+
+    /* print array */
+    for (i = 0; i &lt; 11; ++i) LSystem_Print(&quot;%lu &quot;, theItems[i]);
+    LSystem_Print(&quot;\n&quot;);
+
+    /* sort array */
+    LSort_RecQuick(theItems, 11, LType_UI4);
+
+    /* print sorted array */
+    for (i = 0; i &lt; 11; ++i) LDebug_Print(&quot;%lu &quot;, theItems[i]);
+    LSystem_Print(&quot;\n&quot;);
+
+    return 0;
+}
+</pre>
+</blockquote>
+<p>
+<hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li>Nov 25, 2003: created.</li>
+  <li>Nov 23, 2005: added insertion sort, selection sort, bubble sort, mergesort, and quicksort.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<html>
+<head>
+<title>LXPBlock</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LXPBlock</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Support for cross-platform data exchange</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dis.uniroma1.it/%7Edemetres">Camil 
+      Demetrescu </a></td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Dec 15, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Sep 25, 2003</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#intro">Introduction</a> </li>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="intro"></a>Introduction</b></h2>
+<p>The component <tt>LXPBlock</tt> (XP=cross-platform) provides operations for 
+  maintaining a collection of numerical and non-numerical data. The collection 
+  is stored as a memory block that can be shared among different platforms. To 
+  allow portability of numerical data across different architectures, numbers 
+  are stored in big-endian format in the block.
+<p><hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LXPBLock_ID
+
+LXPBlock_UNEXPECTED_END_OF_BLOCK
+</pre>
+    </td>
+  </tr>
+</table>
+<p><table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4><a name="component2"></a>Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LXPBlock
+  
+enum {
+    LXPBlock_START,
+    LXPBlock_CURR,
+    LXPBlock_END
+} LXPBlock_TSeekMode</pre>
+    </td>
+  </tr>
+</table>
+<p> 
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LXPBlock*           LXPBlock_New            ();
+LXPBlock*           LXPBlock_NewFromData    (void* inData, ui4 inSize);
+void                LXPBlock_Delete         (LXPBlock* This);
+
+void                LXPBlock_Write          (LXPBlock* This, const void* inData, ui4 inSize);
+ui4                 LXPBlock_Read           (LXPBlock* This, void* outData, ui4 inSize);
+
+void                LXPBlock_WriteXPBlock   (LXPBlock* This, const LXPBlock* inXPBlock);
+LXPBlock*           LXPBlock_ReadXPBlock    (LXPBlock* This);
+
+void                LXPBlock_WriteN1        (LXPBlock* This, const void* inVal);
+void                LXPBlock_WriteN2        (LXPBlock* This, const void* inVal);
+void                LXPBlock_WriteN4        (LXPBlock* This, const void* inVal);
+void                LXPBlock_WriteN8        (LXPBlock* This, const void* inVal);
+
+void                LXPBlock_ReadN1         (LXPBlock* This, void* outVal);
+void                LXPBlock_ReadN2         (LXPBlock* This, void* outVal);
+void                LXPBlock_ReadN4         (LXPBlock* This, void* outVal);
+void                LXPBlock_ReadN8         (LXPBlock* This, void* outVal);
+
+void                LXPBlock_Seek           (LXPBlock* This, i4 inOffset, LXPBlock_TSeekMode inMode);
+ui4                 LXPBlock_Tell           (LXPBlock* This);
+void                LXPBlock_Rewind         (LXPBlock* This);
+
+void*               LXPBlock_GetData        (LXPBlock* This);
+ui4                 LXPBlock_GetSize        (LXPBlock* This);
+</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center"> 
+      <div align="left"><tt><font color="#FF0000">New</font></tt> </div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+    <td bgcolor="#E6E6E6"> 
+      <p>Create empty XP block. The current block position after the operation 
+        is zero. <font color="#FF0000">Caller is responsible of dellocating the 
+        created object using <tt>LXPBlock_Delete</tt>.</font></p>
+    </td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>LXPBlock*</tt></p>
+      <p>pointer to newly created object.</p>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center" rowspan="2"> 
+      <div align="left"><tt><font color="#FF0000">NewFromData</font></tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>void** inData</tt></p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p>Create XP block starting from data segment <tt>*inData</tt> of size <tt>inSize</tt>. 
+        Numbers in the data segment are expected to be represented in big-endian 
+        format. The current block position after the operation is zero.<font color="#0000FF"> 
+        The <tt>LXPBlock</tt> object becomes responsible of deallocating the segment 
+        <tt>*inData</tt>.</font><font color="#FF0000"> Caller is responsible of 
+        dellocating the created object using <tt>LXPBlock_Delete</tt>.</font> 
+        <tt>*inData</tt> is set to <tt>NULL</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>LXPBlock*</tt></p>
+      <p>pointer to newly created object.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center"> 
+      <div align="left"><tt>Delete</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock** ThisA</tt></td>
+    <td bgcolor="#E6E6E6">Release object pointed to by <tt>*ThisA</tt>. <tt>*ThisA</tt> 
+      is set to <tt>NULL</tt>.</td>
+    <td bgcolor="#E6E6E6"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3" align="center"> 
+      <div align="left"><tt>Write</tt> </div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Write to block <tt>This</tt> the memory 
+      segment of size <tt>inSize</tt> pointed by <tt>inData</tt>. The current 
+      block position is advanced by <tt>inSize</tt> bytes after the operation.</td>
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const void* inData</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3" align="center"> 
+      <div align="left"><tt>Read</tt> </div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Read from block <tt>This</tt> <tt>inSize</tt> 
+      bytes, copying them to buffer <tt>outData</tt>. Caller must make sure that 
+      buffer is large enough to hold <tt>inSize</tt> bytes. The current block 
+      position is advanced by <tt>inSize</tt> bytes after the operation.</td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p><tt>void</tt></p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>UNEXPECTED_END_OF_BLOCK</tt> if operation 
+      fails.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>void* outData</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2" align="center"> 
+      <div align="left"><tt>WriteXPBlock</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Write to block <tt>This</tt> the size of 
+      <tt>inBlock</tt> (as returned by <tt>LXPBlock_GetSize(inBlock)</tt>) and 
+      the data of <tt>inBlock</tt> (as returned by <tt>LXPBlock_GetData(inBlock)</tt>). 
+      The current block position is advanced by <tt>4+LXPBlock_GetSize(inBlock)</tt> 
+      bytes after the operation.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const LXPBlock* inBlock</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center"> 
+      <div align="left"><tt><font color="#FF0000">ReadXPBlock</font></tt> </div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6">Read from block <tt>This</tt> the data of an <tt>LXPBlock</tt> 
+      previously written with <tt>LXPBlock_WriteXPBlock</tt>. The current block 
+      position is advanced by <tt>4+LXPBlock_GetSize(</tt>returned block<tt>)</tt> 
+      bytes after the operation. <font color="#FF0000">Caller is responsible of 
+      dellocating the created object using <tt>LXPBlock_Delete</tt>.</font></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>LXPBlock*</tt> 
+      <p>Pointer to a newly created <tt>LXPBlock</tt> object. 
+    </td>
+    <td bgcolor="#E6E6E6"><tt>UNEXPECTED_END_OF_BLOCK</tt> if operation fails.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center" rowspan="2"> 
+      <div align="left"><tt>WriteN1</tt><br>
+        <tt>WriteN2</tt><br>
+        <tt>WriteN4</tt><br>
+        <tt>WriteN8</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p>Write to block <tt>This</tt> the number of size 1, 2, 4, or 8 bytes stored 
+        in buffer <tt>inVal</tt>. Numbers of size &gt;1 byte are written to file 
+        in big endian format. The current block position is advanced by 1,2,4, 
+        or 8 bytes after the operation.</p>
+      <table width="95%" border="0" cellspacing="1" cellpadding="2">
+        <tr bgcolor="#999999"> 
+          <td><font color="#FFFFFF"><b>Use this function</b></font></td>
+          <td><font color="#FFFFFF"><b>... to write values of these types</b></font></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>WriteN1</tt></td>
+          <td><tt>i1, ui1</tt></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>WriteN2</tt></td>
+          <td><tt>i2, ui2</tt></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>WriteN4</tt></td>
+          <td><tt>i4, ui4, f4</tt></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>WriteN8</tt></td>
+          <td><tt>f8</tt></td>
+        </tr>
+      </table>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const void* inVal</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center" rowspan="2"> 
+      <div align="left"><tt>ReadN1<br>
+        ReadN2<br>
+        ReadN4<br>
+        ReadN8</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p>Read from block <tt>This</tt> a number of size 1, 2, 4, or 8 bytes and 
+        copy it to buffer pointed by <tt>outVal</tt>.Caller must make sure that 
+        buffer is large enough to hold the value. The current file position is 
+        advanced by 1,2,4, or 8 bytes after the operation.</p>
+      <table width="95%" border="0" cellspacing="1" cellpadding="2">
+        <tr bgcolor="#999999"> 
+          <td><font color="#FFFFFF"><b>Use this function</b></font></td>
+          <td><font color="#FFFFFF"><b>... to read values of these types</b></font></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>WriteN1</tt></td>
+          <td><tt>i1, ui1</tt></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>WriteN2</tt></td>
+          <td><tt>i2, ui2</tt></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>WriteN4</tt></td>
+          <td><tt>i4, ui4, f4</tt></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>WriteN8</tt></td>
+          <td><tt>f8</tt></td>
+        </tr>
+      </table>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>UNEXPECTED_END_OF_BLOCK</tt> if operation 
+      fails.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>void* outVal</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center" rowspan="3"> 
+      <div align="left"><tt> Seek </tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p>Move current position in block <tt>This</tt> by <tt>inOffset</tt>bytes 
+        starting from the position specified by <tt>inMode</tt>:</p>
+      <table width="95%" border="0" cellspacing="1" cellpadding="2">
+        <tr bgcolor="#999999"> 
+          <td><b><font color="#FFFFFF"><tt>inMode</tt></font></b></td>
+          <td><b><font color="#FFFFFF">Position relative to</font></b></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>START</tt></td>
+          <td>beginning of the block</td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>CURR</tt></td>
+          <td>current position in the block</td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td><tt>END</tt></td>
+          <td>end of the block</td>
+        </tr>
+      </table>
+      <p>If the resulting position is negative, then the current position is set 
+        to the beginning of the block. If the resulting position falls beyond 
+        the end of the block, the current position is set to the end of the block.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>i4 inOffset</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>TSeekMode inMode</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center"> 
+      <div align="left"><tt> Tell</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>ui4</tt></p>
+      <p>Current position in block <tt>This</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center"> 
+      <div align="left"><tt> Rewind</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6">Reset current position to the beginning of the XP block. 
+      Equivalent to <tt>Seek(This,0,LXPBlock_START)</tt></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>ui4</tt></p>
+      <p>Current position in block <tt>This</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center"> 
+      <div align="left"><tt>GetData</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6">Get access to the data segment of block <tt>This</tt>. 
+      To obtain the size in bytes of the data segment use function <tt>GetSize</tt>. 
+      Numbers on the data segment are represented in big-endian format. <font color="#0000FF">Caller 
+      should not deallocate the pointer returned by <tt>GetBlock</tt>.</font></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>void</tt>*</p>
+      <p>Pointer to the object's data segment.</p>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" align="center"> 
+      <div align="left"><tt>GetSize</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* This</tt></td>
+    <td bgcolor="#E6E6E6">Get the size of the object's data segment.</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>ui4</tt></p>
+      <p>Size in bytes of the object's data segment.</p>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 15, 2001: created.</li>
+  <li>Aug 26, 2002: added WriteLXPBlock and ReadLXPBlock.</li>
+  <li>Sep 7, 2002: changed Delete, added Rewind.</li>
+  <li>Sep 25, 2003: updated.</li>
+</ul>
+</body>
+</html>

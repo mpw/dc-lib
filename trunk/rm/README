@@ -1,0 +1,18 @@
+------------------------------------
+rm: a reactive memory manager
+------------------------------------
+version: 0.1 beta
+authors: Camil Demetrescu
+         Irene Finocchi
+         Alessandro Macchioni (main programmer)
+         Andrea Ribichini
+------------------------------------
+
+This folder contains an efficient implementation of a reactive memory manager for IA-32 Linux platforms.
+
+Dependencies:
+
+- glib-2.0
+- libelf
+- libdisasm
+

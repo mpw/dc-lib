@@ -1,0 +1,382 @@
+<html>
+<head>
+<title>LDataStore</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LDataStore</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Pool of data blocks</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dsi.uniroma1.it/%7Efinocchi">Irene 
+      Finocchi </a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Dec 19, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Nov 28, 2002</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#intro">Introduction</a></li>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="intro"></a>Introduction</b></h2>
+<p>The component <tt>LDataStore</tt> provides support for maintaining a pool of 
+  data blocks, possibly of different sizes. Blocks are represented contiguously 
+  in memory in a data segment containing the whole collection of blocks. Each 
+  block has a logical index in the data segment in the range <tt>0</tt> to the 
+  number of blocks <tt>-1</tt> (<tt>[0,GetBlocksCount()-1]</tt>). Since the blocks 
+  may have different sizes, a data map segment is also maintained to contain the 
+  offset of each block in the data segment. Member functions allow it to add new 
+  data blocks, to retrieve the block offset from the block index, to search for 
+  a block index from the block data.<br>
+  <tt><br>
+  </tt> It is also possible to use <tt>LDataStore</tt> to maintain a data segment 
+  in which identical blocks (as sequence of bytes) are represented only once. 
+  To do so, new blocks must be added using the member function <tt>AddUniqueBlock</tt> 
+  instead of <tt>AddBlock</tt>. A typical application is maintaining a pool of 
+  strings of arbitrary lengths, where no two strings in the pool are allowed to 
+  be equal. </p>
+<p>
+<hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LDataStore_ID
+</pre>
+    </td>
+  </tr>
+</table>
+<p><table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LDataStore
+LDataStore_TIdx
+</pre>
+    </td>
+  </tr>
+</table>
+
+<p> 
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2">
+      <pre>
+LDataStore*       LDataStore_New              ();
+LDataStore*       LDataStore_NewFromData      (LXPBlock* thruBlock);
+void              LDataStore_Delete           (LDataStore** ThisA);
+
+LDataStore_TIdx   LDataStore_AddBlock         (LDataStore* This, const void* inItem, ui4 inSize);
+LDataStore_TIdx   LDataStore_AddXPBlock       (LDataStore* This, const LXPBlock* inItem);
+LDataStore_TIdx   LDataStore_AddUniqueBlock   (LDataStore* This, const void* inItem, ui4 inSize);
+Bool              LDataStore_GetBlockIndex    (LDataStore* This, const void* inItem, ui4 inSize, LDataStore_TIdx* outIndex);
+ui4               LDataStore_GetOffsetByIndex (LDataStore* This, LDataStore_TIdx inIndex);
+ui4               LDataStore_GetSizeByIndex   (LDataStore* This, LDataStore_TIdx inIndex);
+void              LDataStore_FetchBlockByIndex(LDataStore* This, LDataStore_TIdx inIndex, void* outItem);
+void*             LDataStore_GetDataByIndex   (LDataStore* This, LDataStore_TIdx inIndex);
+LXPBlock*         LDataStore_GetXPBlockByIndex(LDataStore* This, LDataStore_TIdx inIndex);
+void*             LDataStore_GetData          (LDataStore* This);
+ui4               LDataStore_GetSize          (LDataStore* This);
+void*             LDataStore_GetMap           (LDataStore* This);
+ui4               LDataStore_GetMapSize       (LDataStore* This);
+ui4               LDataStore_GetBlocksCount   (LDataStore* This);
+LXPBlock*         LDataStore_GetXPBlock       (LDataStore* This);
+</pre>
+    </td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p> 
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt><font color="#FF0000">New</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>-</tt></td>
+    <td bgcolor="#E6E6E6">Create object containing an empty data store. <font color="#FF0000">Caller 
+      is responsible of dellocating the created object using <tt>LDataStore_Delete</tt>.</font></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>LDataStore*<br>
+        <br>
+        </tt>pointer to newly created object</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt><font color="#FF0000">NewFromData</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock* thruBlock</tt></td>
+    <td bgcolor="#E6E6E6"><font color="#000000">Read data from <tt>thruBlock</tt> 
+      and create an <tt>LDataStore</tt> object. </font><font color="#FF0000">Caller 
+      is responsible of dellocating the created object using <tt>LDataStore_Delete</tt>.</font></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>LDataStore*<br>
+        <br>
+        </tt>pointer to newly created object</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>Delete</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore** ThisA</tt></td>
+    <td bgcolor="#E6E6E6">Release object <tt>*ThisA</tt>. <tt>*ThisA</tt> is set 
+      to <tt>NULL</tt>.</td>
+    <td bgcolor="#E6E6E6"><tt>void</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>AddBlock</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Add block <tt>inItem</tt> of size <tt>inSize</tt> 
+      (in bytes) to the data pool.</td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p><tt>LDataStore_TIdx<br>
+        <br>
+        </tt>index of the newly created block in the pool.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const void* inItem</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>AddXPBlock</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Add an XP block to the data pool.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>LDataStore_TIdx<br>
+        <br>
+        </tt>index of the newly created block in the pool.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const LXPBlock* inItem</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>AddUniqueBlock</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Add a block to the data pool if it does 
+      not already exist.</td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p><tt>LDataStore_TIdx<br>
+        <br>
+        </tt>index of the block in the pool.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const void* inItem</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="4"><tt>GetBlockIndex</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="4">Scan blocks in the data segment and check 
+      if block <tt>inItem</tt> of size <tt>inSize</tt> exists. If this is the 
+      case, set <tt>outIndex</tt> to contain its index in the data segment.</td>
+    <td bgcolor="#E6E6E6" rowspan="4"><tt>Bool<br>
+      <br>
+      TRUE</tt> if the item has been found, <tt>FALSE </tt>otherwise.</td>
+    <td bgcolor="#E6E6E6" rowspan="4">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const void* inItem</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LDataStore_TIdx* outIndex</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <div align="left"><tt>GetOffsetByIndex</tt> </div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>ui4<br>
+      <br>
+      </tt>offset in the data segment of the block whose index is <tt>inIndex</tt>. 
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2">- </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LDataStore_TIdx inIndex</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>GetSizeByIndex</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>ui4<br>
+      <br>
+      </tt>size of the block whose index is <tt>inIndex</tt>. </td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LDataStore_TIdx inIndex</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>FetchBlockByIndex</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Copy to buffer <tt>outBlock</tt> block with 
+      index <tt>inIndex</tt>. Buffer <tt>outBlock</tt> must be allocated by the 
+      caller and must be large enough to contain <tt>LDataStore_GetSizeByIndex(This,inIndex)</tt> 
+      bytes.</td>
+    <td bgcolor="#E6E6E6" rowspan="3"> 
+      <p><tt>-</tt></p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LDataStore_TIdx inIndex</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>void* outBlock</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>GetDataByIndex</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Return address of<tt></tt> block with index 
+      <tt>inIndex</tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>void*<br>
+        <br>
+        </tt>address of block with index <tt>inIndex</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LDataStore_TIdx inIndex</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>GetXPBlockByIndex</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Return newly created LXPBlock constructed 
+      with the block with index <tt>inIndex</tt>.<font color="#FF0000"> Caller 
+      is responsible of dellocating the returned object using <tt>LXPBlock_Delete</tt>.</font></td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>LXPBlock*<br>
+        <br>
+        </tt>address newly created <tt>LXPBlock</tt> object.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LDataStore_TIdx inIndex</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>GetData</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"><tt>void*<br>
+      <br>
+      </tt>pointer to the data segment. </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>GetSize</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"><tt>ui4<br>
+      <br>
+      </tt>size of the data segment. </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>GetMap</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"><tt>void*<br>
+      <br>
+      </tt>pointer to the data map segment. </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>GetMapSize</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"><tt>ui4<br>
+      <br>
+      </tt>size of the data segment. </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>GetBlocksCount</tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6">-</td>
+    <td bgcolor="#E6E6E6"><tt>ui4<br>
+      <br>
+      </tt>number of blocks in the data segment. </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt><font color="#FF0000">GetXPBlock</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>LDataStore* This</tt></td>
+    <td bgcolor="#E6E6E6"><font color="#000000">Read data from <tt>LDataStore</tt> 
+      and create</font> a new <tt>LXPBlock</tt> object. <font color="#FF0000">Caller 
+      is responsible of dellocating the returned object using <tt>LXPBlock_Delete</tt>.</font></td>
+    <td bgcolor="#E6E6E6"><tt>LXPBlock*<br>
+      <br>
+      </tt>pointer to the new <tt>LXPBlock</tt>. </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+</table>
+<p>
+<hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 19, 2001: created</li>
+  <li>Aug 24-25, 2002: added new functions</li>
+  <li>Sep 7, 2002: changed Delete</li>
+  <li>Nov 28, 2002: added GetDataByIndex and GetXPBlockByIndex</li>
+</ul>
+</body>
+</html>

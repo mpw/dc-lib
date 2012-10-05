@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <title>LRandSource</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    </head>
+    <body text="#000000" bgColor="#ffffff">
+        <h1>LRandSource</h1>
+        <table cellSpacing="1" cellPadding="2" width="100%" border="0">
+            <tr>
+                <td bgColor="#e6e6e6"><b>Description</b></td>
+                <td bgColor="#e6e6e6">Random Number generator</td>
+            </tr>
+            <tr>
+                
+    <td bgColor="#e6e6e6"><b>Header file</b></td>
+                
+    <td bgColor="#e6e6e6"><tt>LRandSource.h</tt></td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Author</b></td>
+                <td bgColor="#e6e6e6"><A href="mailto:thepomy@tin.it">Stefano Emiliozzi</A>, 
+                    <a href="http://www.dis.uniroma1.it/%7Edemetres">Camil Demetrescu</a>
+                </td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Created</b></td>
+                <td bgColor="#e6e6e6">Nov 29, 2001</td>
+            </tr>
+            <tr>
+                <td bgColor="#e6e6e6"><b>Last updated</b></td>
+                
+    <td bgColor="#e6e6e6">Sep 25, 2003</td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+        <h2>Contents</h2>
+        <ul>
+            <li>
+                <A href="#intro">Introduction</A>
+            <li>
+                <A href="#interface">Interface</A>
+            <li>
+                <A href="#apiref">API reference</A>
+            <li>
+                <A href="#history">Revision history</A></li></ul>
+        <hr>
+        <h2><b><a name="intro"></a>Introduction</b></h2>
+        The component <tt>LRandSource</tt> provides a pseudo-random number generator. 
+This is an implementation of the Steve Park &amp; Dave Geyer work, based on:<em> 
+</em>Steve Park and Keith Miller, &quot;Random Number Generators: Good Ones Are 
+Hard To Find". <i>Communications of the ACM</i>, October 1988. This method proved 
+to be more accurate than the standard ANSI C <tt>rand()</tt> function. 
+<p>
+            <hr>
+            <h2><b><a name="interface"></a>Interface</b></h2>
+            <table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Constants</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"><tt>LRandSource_ID</tt></td>
+                </tr>
+            </table>
+            <p><table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Types</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2">
+      <pre>struct LRandSource</pre>
+                    </td>
+                </tr>
+            </table>
+            <p><table cellSpacing="1" cellPadding="4" width="100%" border="0">
+                <tr>
+                    <td bgColor="#bbbbbb" colSpan="2">
+                        <h4>Functions</h4>
+                    </td>
+                </tr>
+                <tr>
+                    
+    <td colSpan="2"> 
+      <pre>
+LRandSource* LRandSource_New        (i4 inSeed)
+void         LRandSource_Delete     (LRandSource** ThisA)
+ui4          LRandSource_GetRandUI4 (LRandSource* This, ui4 inMin, ui4 inMax)
+f8           LRandSource_GetRandF8  (LRandSource* This)
+i4           LRandSource_GetSeed    (LRandSource* This)
+</pre>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+            <h2><a name="apiref"></a>API Reference</h2>
+            
+<table cellSpacing="1" cellPadding="4" width="100%">
+  <tr bgcolor="#bbbbbb"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt><font color="#ff0000">New</font></tt></td>
+    <td bgColor="#e6e6e6"><tt>i4 inSeed</tt></td>
+    <td bgColor="#e6e6e6">Creates a new <tt>LRandSource</tt> <font color="#ff0000">Caller 
+      is responsible of dellocating the created object using <tt>LRandSource_Delete</tt>.</font></td>
+    <td bgColor="#e6e6e6"> 
+      <p><tt>LRandSource*</tt></p>
+      <p>pointer to newly created object</p>
+    </td>
+    <td bgcolor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>Delete</tt></td>
+    <td bgColor="#e6e6e6" nowrap><tt>LRandSource** ThisA</tt></td>
+    <td bgColor="#e6e6e6">Releases object <tt>*ThisA</tt>. <tt>*ThisA</tt> is 
+      set to <tt>NULL</tt>. </td>
+    <td bgColor="#e6e6e6"><tt>void</tt></td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>GetRandUI4</tt></td>
+    <td noWrap bgColor="#e6e6e6"><tt>ui4 inMin<br>
+      ui4 inMax<br>
+      </tt></td>
+    <td bgColor="#e6e6e6"> Returns a random number in the range <tt>[inMin, inMax]</tt>.</td>
+    <td bgColor="#e6e6e6"><tt>ui4</tt></td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>GetRandF8</tt></td>
+    <td noWrap bgColor="#e6e6e6"><tt>LRandSource* This</tt></td>
+    <td bgColor="#e6e6e6"> Returns a random number in the range <tt>[0, 1]</tt>.</td>
+    <td bgColor="#e6e6e6"><tt>f8</tt></td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+  <tr> 
+    <td bgColor="#e6e6e6"><tt>Get_Seed</tt></td>
+    <td noWrap bgColor="#e6e6e6"><tt>LRandSource* This</tt></td>
+    <td bgColor="#e6e6e6">Returns the <tt>Seed</tt> of the generator.</td>
+    <td bgColor="#e6e6e6"><tt>i4</tt></td>
+    <td bgColor="#e6e6e6"><tt>-</tt></td>
+  </tr>
+</table>
+        <p>
+            <hr>
+            <h2><a name="history"></a>Revision history</h2>
+            
+<ul>
+  <li> Nov 29, 2001: created. 
+  <li> Apr 6, 2003: changed the internal generator system.</li>
+  <li>Sep 25, 2003: updated.</li>
+</ul>
+            </body>
+</html>

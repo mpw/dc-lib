@@ -1,0 +1,150 @@
+<html>
+<head>
+<title>LSelect</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LSelect</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> Selection algorithms</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LSelect.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dsi.uniroma1.it/%7Efinocchi">Irene Finocchi</a>, <a href="mailto:f.iovine@email.it?subject=LL">Francesco Iovine</a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Feb 7, 2005</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Nov 23, 2005</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#example">Example</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>LSelect_ID
+LSelect_BAD_SELECT
+</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2">
+      <h4>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2">
+      <pre>void LSelect_Rand   (void* inItems, ui4 inItemsCount, LType_TType inItemType, ui4 inSelect);
+void LSelect_Determ (void* inItems, ui4 inItemsCount, LType_TType inItemType, ui4 inSelect);
+</pre>
+    </td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p> 
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="4">Rand</td>
+    <td bgcolor="#E6E6E6"><tt>void* inItems</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="4">Works on <tt>inItemsCount</tt> items with 
+      type descriptor <tt>inItemType</tt> contained in the array pointed to by 
+      <tt>inItems</tt>.<br>Moves the inSelect-th item to the inSelect-th position, using the classical quickSelect randomized algorithm.</td>
+    <td bgcolor="#E6E6E6" rowspan="4">-</td>
+    <td bgcolor="#E6E6E6" rowspan="4"><tt>BAD_SELECT,</tt> if inSelect is out of range.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inItemsCount</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LType_TType inItemType</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSelect</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="4">Determ</td>
+    <td bgcolor="#E6E6E6"><tt>void* inItems</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="4">Works on <tt>inItemsCount</tt> items with 
+      type descriptor <tt>inItemType</tt> contained in the array pointed to by 
+      <tt>inItems</tt>.<br>Moves the inSelect-th item to the inSelect-th position, using the classical deterministic algorithm by Blum, Floyd, Pratt, Rivest and Tarjan.</td>
+    <td bgcolor="#E6E6E6" rowspan="4">-</td>
+    <td bgcolor="#E6E6E6" rowspan="4"><tt>BAD_SELECT,</tt> if inSelect is out of range.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><tt>ui4 inItemsCount</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>LType_TType inItemType</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4 inSelect</tt></td>
+  </tr>
+</table>
+<hr>
+<h2><a name="example"></a>Example</h2>
+<blockquote>
+  <pre>#include &quot;LSelect.h&quot;
+#include &quot;LSystem.h&quot;
+
+int main(){
+    ui4 i, k = 5, theItems[11] = { 34, 12, 6, 9, 33, 11, 4, 3, 11, 23, 26 };
+
+    /* print array */
+    for (i = 0; i &lt; 11; ++i) LSystem_Print(&quot;%lu &quot;, theItems[i]);
+    LSystem_Print(&quot;\n&quot;);
+
+    /* select k-th item */
+    LSelect_Rand(theItems, 11, LType_UI4, k);
+
+    /* print k-th item */
+    LSystem_Print(&quot;The %lu-th item is %lu \n&quot;, k, theItems[<font color="#FF0000">k-1</font>]);
+
+    return 0;
+}
+</pre>
+</blockquote>
+<p>
+<hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Feb 7, 2005: created.</li>
+  <li> Nov 23, 2005: updated.</li>
+</ul>
+</body>
+</html>

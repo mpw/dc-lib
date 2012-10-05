@@ -1,0 +1,42 @@
+===========================================
+To do list:
+===========================================
+
+--------------------------------------------
+support instruction:
+
+[rm] Instruction size: 3
+[rm] Instruction: imull	(%eax), %edx
+[rm] Instruction opcode: 0f af 10 
+
+--------------------------------------------
+support instruction:
+
+[rm] Instruction size: 2
+[rm] Instruction: fld	(%eax)
+[rm] Instruction opcode: dd 00 
+
+
+===========================================
+Done:
+===========================================
+
+--------------------------------------------
+support instruction:
+
+[rm] Instruction size: 3
+[rm] Instruction: subl	$0x01, (%eax)
+[rm] Instruction opcode: 83 28 01 
+
+--------------------------------------------
+please replace pesky:
+
+printf("case op_expression, TO DO\n");
+
+with:
+
+#if rm_DEBUG > 1
+printf("case op_expression, TO DO\n");
+#endif
+
+

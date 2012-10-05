@@ -1,0 +1,340 @@
+<html>
+<head>
+<title>LString</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>LString</h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> String management</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>LString.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><a href="http://www.dis.uniroma1.it/%7Edemetres">Camil 
+      Demetrescu</a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6">Dec 19, 2001</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6">Sep 25, 2003</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+  
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LString_ID
+</pre>
+    </td>
+  </tr>
+</table>
+<p><table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>
+LString</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2">
+      <h4>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2">
+      <pre>
+i1*    LString_Clone     (const i1* inStr)
+void   LString_Copy      (const i1* inStr, i1* outStr)
+void   LString_Append    (const i1* inStr, i1* thruStr)
+ui4    LString_Len       (const i1* inStr)
+i1     LString_Compare   (const i1* inStr1, const i1* inStr2)
+void   LString_Format    (i1* outStr, const i1* inFormatStr, ...)
+i1*    LString_Tokenizer (i1* inLine, const i1* inSeparators)
+i4     LString_ToI4      (const i1* inStr)
+ui4    LString_ToUI4     (const i1* inStr)
+f8     LString_ToF8      (const i1* inStr)
+    
+void   LString_PToXP     (i1** thruText, ui4* thruSize)
+void   LString_XPToP     (i1** thruText, ui4* thruSize)</pre>
+    </td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p> 
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td><b>Function</b></td>
+    <td><b>Arguments</b></td>
+    <td><b>Description</b></td>
+    <td><b>Returns</b></td>
+    <td><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt><font color="#FF0000">Clone</font></tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inStr</tt></td>
+    <td bgcolor="#E6E6E6">Creates a copy of C string <tt>inStr</tt>. <font color="#FF0000">Caller 
+      is responsible of dellocating the created memory block using <tt>LMemory_Free</tt>.</font></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>i1*</tt></p>
+      <p>pointer to a newly created string</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <div align="left"> <tt>Copy</tt></div>
+    </td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inStr</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Copies C string <tt>inStr</tt> into <tt>outStr</tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"> -</td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>i1* outStr</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>Append</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inStr</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Appends C string <tt>inStr</tt> to C string 
+      <tt>thruStr</tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>i1* thruStr</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>Len</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inStr</tt></td>
+    <td bgcolor="#E6E6E6">Computes the length of C string <tt>inStr</tt>.</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>ui4</tt></p>
+      <p>Number of characters in C string <tt>inStr</tt> (zero-terminator is excluded)</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>Compare</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inStr1</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="2">Compares <tt>inStr1</tt> with <tt>inStr2</tt><tt></tt>.</td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>i1</tt></p>
+      <p>Zero if strings are equal, positive if <tt>inStr1</tt> is greater than 
+        <tt>inStr2</tt><tt></tt>. according to the lexicographic order. Negative 
+        otherwise.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const i1* inStr2</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="3"><tt>Format</tt></td>
+    <td bgcolor="#E6E6E6"><tt>i1* outStr</tt></td>
+    <td bgcolor="#E6E6E6" rowspan="3">Writes a formatted output<tt></tt> as a 
+      string to buffer <tt>outStr</tt>.Wrapper for the <tt>sprintf</tt> C function. 
+      We recommend using the following specifiers: 
+      <p> 
+      <table width="40%" border="0" cellspacing="1" cellpadding="2">
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">i1</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%c</tt>, or<tt> %hd</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">ui1</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%c</tt>, or<tt> %hu</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">i2</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%hd</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">ui2</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%hu</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">i4</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%ld</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">ui4</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%lu</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">f4</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%f</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">f8</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%Lf</tt></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#999999"><b><tt><font color="#FFFFFF">i1*</font></tt></b></td>
+          <td bgcolor="#FFFFFF"><tt>%s</tt></td>
+        </tr>
+      </table>
+      <p><i>Example:</i></p>
+      <pre>
+i1  theBuf[256];
+ui4 theCode     = 27;
+i1  theChannel  = 'k';
+LString_Format(theBuf,"Opening stream %lu at channel %c\n", theCode, theChannel);
+LDebug_Print(theBuf);</pre>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+    <td bgcolor="#E6E6E6" rowspan="3">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const i1* inFormatStr</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>...</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt> Tokenizer</tt></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>i1* inLine</tt></p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p>Decomposes <tt>inLine</tt> in substrings (tokens) separated by characters 
+        in <tt>inSeparators</tt>. In the first call to <tt>Tokenizer</tt>, <tt>inLine</tt> 
+        must contain the string to be tokenized. In successive calls, let <tt>inLine</tt> 
+        be <tt>NULL</tt>. Notice that the buffer pointed to <tt>inLine</tt> by 
+        is modified by <tt>Tokenizer</tt>.</p>
+      <p><i>Example:</i></p>
+      <pre>i1* theLine = &quot;the quick brown fox&quot;;
+i1* theToken = LString_Tokenizer(theLine, &quot; &quot;);
+while (theToken!=NULL) {
+    LDebug_Print(&quot;token: %s\n&quot;, theToken);
+    theToken = LString_Tokenizer(NULL, &quot; &quot;);
+}</pre>
+      produces the following output: 
+      <pre>
+token: the
+token: quick
+token: brown
+token: fox
+</pre>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2"> 
+      <p><tt>i1*</tt></p>
+      <p>Pointer to the current token, or <tt>NULL</tt> if no more tokens can 
+        be extracted from <tt>inLine</tt>.</p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>const i1* inSeparators</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ToI4</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inStr</tt></td>
+    <td bgcolor="#E6E6E6">Converts string <tt>inStr</tt> to an <tt>i4</tt> value 
+      (as performed by the <tt>strtol</tt> C standard function)</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>i4</tt></p>
+      <p>Converted number</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ToUI4</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inStr</tt></td>
+    <td bgcolor="#E6E6E6">Converts string <tt>inStr</tt> to an <tt>ui4</tt> value 
+      (as performed by the <tt>strtoul</tt> C standard function)</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>ui4</tt></p>
+      <p>Converted number</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ToF8</tt></td>
+    <td bgcolor="#E6E6E6"><tt>const i1* inStr</tt></td>
+    <td bgcolor="#E6E6E6">Converts string <tt>inStr</tt> to an <tt>f8</tt> value 
+      (as performed by the <tt>strtod</tt> C standard function)</td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>f8</tt></p>
+      <p>Converted number</p>
+    </td>
+    <td bgcolor="#E6E6E6">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>PToXP</tt></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>i1** thruText</tt></p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2">Converts the text buffer pointed to by <tt>*thruText</tt> 
+      of size <tt>*thruSize</tt> from a platform-dependent newline format (i.e., 
+      CR, LF, CR+LF, depending on the target operating system) to the LF-based 
+      (UNIX) format (used as a standard cross-platform format in the LL). This 
+      function is useful, e.g., when loading a text file that has to be processed 
+      by the program.</td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4* thruSize</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" rowspan="2"><tt>XPToP</tt></td>
+    <td bgcolor="#E6E6E6"> 
+      <p><tt>i1** thruText</tt></p>
+    </td>
+    <td bgcolor="#E6E6E6" rowspan="2">Converts the text buffer pointed to by <tt>*thruText</tt> 
+      of size <tt>*thruSize</tt> from the LF-based (UNIX) newline format (used 
+      as a standard cross-platform format in the LL) to the platform-dependent 
+      newline format (i.e., CR, LF, CR+LF, depending on the target operating system). 
+      This function is useful, e.g., when saving a text file that has been processed 
+      by the program.</td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+    <td bgcolor="#E6E6E6" rowspan="2">-</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><tt>ui4* thruSize</tt></td>
+  </tr>
+</table>
+<p><hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> Dec 19, 2001: created.</li>
+  <li>Dec 22, 2001: added <tt>Compare</tt> function.</li>
+  <li>Aug 28, 2002: added ToX fucntions.</li>
+  <li>Sep 25, 2003: added XtoXP/XPToP/Tokenizer.</li>
+</ul>
+</body>
+</html>

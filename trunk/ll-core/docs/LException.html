@@ -1,0 +1,246 @@
+<html>
+<head>
+<title>LException</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><span lang="it">LException</span></h1>
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Description</b></td>
+    <td bgcolor="#E6E6E6"> <span lang="it">Exception handling</span></td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6"><b>Header file</b></td>
+    <td bgcolor="#E6E6E6"><tt>L<span lang="it">Exception</span>.h</tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Author</b></td>
+    <td bgcolor="#E6E6E6"><span lang="it">Camil Demetrescu</span></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Created</b></td>
+    <td bgcolor="#E6E6E6"><span lang="it">Jan 11</span>, 200<span lang="it">3</span></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6"><b>Last updated</b></td>
+    <td bgcolor="#E6E6E6"><span lang="it">Sep 27</span>, 200<span lang="it">3</span></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#intro">Introduction</a> </li>
+  <li><a href="#interface">Interface</a></li>
+  <li><a href="#apiref">API reference</a></li>
+  <li><a href="#example">Example</a></li>
+  <li><a href="#history">Revision history</a></li>
+</ul>
+<hr>
+<h2><b><a name="intro"></a>Introduction</b></h2>
+<p>Component <tt>LException</tt> defines macros for supporting in C the <tt>Try 
+  ... Throw ... Catch</tt> exception handling mechanism typical of C++/Java.</p>
+<hr>
+<h2><b><a name="interface"></a>Interface</b></h2>
+<p> 
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Constants</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>LException_ID</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2"> 
+      <h4>Types</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <pre>LException</pre>
+    </td>
+  </tr>
+</table>
+<p>
+<table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2" width="939"> 
+      <h4>Macros</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2" width="939"> 
+      <pre>Try<br>Throw(ui4 inExceptionCode)<br>Catch(LException* inCaughtException)<br>CatchAny<br>Rethrow</pre>
+    </td>
+  </tr>
+</table>
+<p><table width="100%" border="0" cellspacing="1" cellpadding="4">
+  <tr> 
+    <td bgcolor="#BBBBBB" colspan="2" width="939"> 
+      <h4>Functions</h4>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2" width="939"> 
+      <pre>i1*  LException_GetName     (LException* inException)
+ui4  LException_GetCode     (LException* inException)
+ui4  LException_GetLine     (LException* inException)
+i1*  LException_GetFileName (LException* inException)
+void LException_Dump        (LException* inException)</pre>
+    </td>
+  </tr>
+</table>
+<p> 
+<hr>
+<h2><a name="apiref"></a>API Reference</h2>
+<p> 
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td height="19"><b>Macro</b></td>
+    <td height="19"><b>Arguments</b></td>
+    <td height="19"><b>Description</b></td>
+  </tr>
+  <tr>
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it">Try</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>-</tt></td>
+    <td bgcolor="#E6E6E6" height="26">Like <tt>try</tt> in C++/Java. <b>Important 
+      notice</b>: NEVER use <tt>return</tt>, <tt>break</tt>, <tt>continue</tt>, 
+      <tt>goto</tt> to jump out of a <tt>Try { ... }</tt> block. This will corrupt 
+      immediately the execution environment, causing the program to crash.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it"> Throw</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>ui4 inExceptionCode</tt></td>
+    <td bgcolor="#E6E6E6" height="26">Like <tt>throw</tt> in C++/Java. Raises 
+      an exception with code <tt>inExceptionCode</tt>.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it">Catch</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>LException* inException</tt></td>
+    <td bgcolor="#E6E6E6" height="26">Like <tt>catch</tt> in C++/Java. Argument 
+      <tt>inException</tt> is assigned with the address of the thrown exception. 
+      Differently from C++, only one catch block is allowed. <b>Notice</b>: objects 
+      of type <tt>LException</tt> do not need to be deallocated explicitly.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it"> CatchAny</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>-</tt></td>
+    <td bgcolor="#E6E6E6" height="26">Like <tt>Catch</tt>, but it does not require 
+      to specify an argument.</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it"> Rethrow</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>-</tt></td>
+    <td bgcolor="#E6E6E6" height="26"> 
+      <p>Used in a <tt>Catch</tt> (or <tt>CatchAny</tt>) block to rethrow the 
+        exception exactly as it was caught. It is useful in a <tt>CatchAny</tt> 
+        block where the pointer to the thrown exception is unknown. Differently 
+        from <tt><span lang="it">Throw</span></tt>, it does not generate a new 
+        exception, but it rethrows an exception that was just caught.</p>
+      </td>
+  </tr>
+</table>
+<p> 
+<table cellpadding="4" cellspacing="1" width="100%">
+  <tr bgcolor="#BBBBBB"> 
+    <td height="19"><b>Function</b></td>
+    <td height="19"><b>Arguments</b></td>
+    <td height="19"><b>Description</b></td>
+    <td height="19"><b>Returns</b></td>
+    <td height="19"><b>Throws</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it"> GetName</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>LException* inException</tt></td>
+    <td bgcolor="#E6E6E6" height="26">Returns the exception name stored in object 
+      <tt>inException</tt>: e.g., if exception <tt>inException</tt> is thrown 
+      with <tt>Throw(LDebug_INTERNAL_ERROR)</tt>, then <tt>GetName</tt> returns 
+      a pointer to the C string <tt>&quot;LDebug_INTERNAL_ERROR&quot;</tt>.</td>
+    <td bgcolor="#E6E6E6" height="26"> 
+      <p><tt>i1*</tt> 
+      <p>Exception name</p>
+    </td>
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it">-</span></tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it">GetCode</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>LException* inException</tt></td>
+    <td bgcolor="#E6E6E6" height="26">Returns the exception code stored in object 
+      <tt>inException</tt>: e.g., if exception <tt>inException</tt> is thrown 
+      with <tt>Throw(LDebug_INTERNAL_ERROR)</tt>, then <tt>GetCode</tt> returns 
+      the integer value <tt>LDebug_INTERNAL_ERROR</tt>.</td>
+    <td bgcolor="#E6E6E6" height="26"> 
+      <p><tt>ui4</tt> 
+      <p>Exception code</p>
+    </td>
+    <td bgcolor="#E6E6E6" height="26">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it"> GetFileName</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>LException* inException</tt></td>
+    <td bgcolor="#E6E6E6" height="26">Accesses the line number in the source file 
+      where object <tt>inException</tt> was created via <tt>Throw</tt> : e.g., 
+      if exception <tt>inException</tt> is thrown at line 233<tt></tt>, then <tt>GetFileName</tt> 
+      returns 233<tt></tt>.</td>
+    <td bgcolor="#E6E6E6" height="26"> 
+      <p><tt>i1*</tt></p>
+      <p>Line number in source code where exception was generated</p>
+    </td>
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it">-</span></tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it"> GetFileName</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>LException* inException</tt></td>
+    <td bgcolor="#E6E6E6" height="26">Accesses the name of the source file where 
+      object <tt>inException</tt> was created via <tt>Throw</tt> : e.g., if exception 
+      <tt>inException</tt> is thrown in file <tt>LMemory.c</tt>, then <tt>GetFileName</tt> 
+      returns a pointer to the C string <tt>&quot;LMemory.c&quot;</tt>.</td>
+    <td bgcolor="#E6E6E6" height="26"> 
+      <p><tt>i1*</tt></p>
+      <p>File name of source code where exception was generated</p>
+    </td>
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it">-</span></tt></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it">Dump</span></tt></td>
+    <td bgcolor="#E6E6E6" height="1"><tt>LException* inException</tt></td>
+    <td bgcolor="#E6E6E6" height="26">Sends information about exception <tt>inException</tt> 
+      to the message console.</td>
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it">-</span></tt></td>
+    <td bgcolor="#E6E6E6" height="26"><tt><span lang="it">-</span></tt></td>
+  </tr>
+</table>
+<p>
+<blockquote> </blockquote>
+<hr>
+<h2><a name="example"></a>Example</h2>
+<blockquote> 
+  <pre>...
+theBlock = NULL;
+Try {
+    if (theSize&gt;255) Throw(LDebug_INTERNAL_ERROR);<br>    theBlock = LMemory_Malloc(theSize);
+    ...
+    LMemory_Free(&amp;theBlock);
+} 
+CatchAny {
+    /* cleanup */
+    if (theBlock!=NULL) LMemory_Free(&amp;theBlock); 
+    Rethrow; 
+}</pre>
+</blockquote>
+<hr>
+<h2><a name="history"></a>Revision history</h2>
+<ul>
+  <li> <span lang="it">Jan</span> <span lang="it">11</span>, 2003: created.</li>
+  <li>Sep 27, 2003: updated.</li>
+</ul>
+</body>
+</html>

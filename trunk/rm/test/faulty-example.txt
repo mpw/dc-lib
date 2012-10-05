@@ -1,0 +1,150 @@
+FUNCTION: exptrees_random_rec
+
+********************************************************************************
+080494e0	push	%ebp
+080494e1	mov	%esp, %ebp
+080494e3	sub	$0x38, %esp
+080494e6	movl	0x8(%ebp), %eax			 <--- patchable instruction (size = 3)
+080494e9	movl	%esi, -0x8(%ebp)			 <--- patchable instruction (size = 3)
+080494ec	movl	0xC(%ebp), %esi			 <--- patchable instruction (size = 3)
+080494ef	movl	%ebx, -0xC(%ebp)			 <--- patchable instruction (size = 3)
+080494f2	movl	%edi, -0x4(%ebp)			 <--- patchable instruction (size = 3)
+080494f5	cmp	$0x02, %eax
+--------------------------------------------------------------------------------
+080494f8	jg	0x000015B8
+080494fe	cmp	$0x01, %eax
+08049501	jz	0x00001560
+08049503	xor	%ebx, %ebx
+08049505	cmp	$0x02, %eax
+08049508	mov	$0x00000001, %edi
+0804950d	jnz	0x0000154A
+0804950f	lcall	0x00001280
+08049514	cmp	$0xBFFFFFFF, %esi
+0804951a	jbe	0x00001522
+0804951c	sub	$0x40000000, %esi
+********************************************************************************
+08049522	movl	$0x00000000, (%esi)			 <--- patchable instruction (size = 6)
+08049528	xor	%ebx, %ebx
+0804952a	movl	$0x00000008, 0x4(%esp)			 <--- patchable instruction (size = 8)
+08049532	movl	%edi, (%esp)			 <--- patchable instruction (size = 3)
+--------------------------------------------------------------------------------
+08049535	lcall	0x000014E0
+********************************************************************************
+0804953a	movl	$0x0000000C, 0x4(%esp)			 <--- patchable instruction (size = 8)
+08049542	movl	%edi, (%esp)			 <--- patchable instruction (size = 3)
+--------------------------------------------------------------------------------
+08049545	lcall	0x000014E0
+********************************************************************************
+0804954a	mov	%ebx, %eax
+0804954c	movl	-0x8(%ebp), %esi			 <--- patchable instruction (size = 3)
+0804954f	movl	-0xC(%ebp), %ebx			 <--- patchable instruction (size = 3)
+08049552	movl	-0x4(%ebp), %edi			 <--- patchable instruction (size = 3)
+08049555	mov	%ebp, %esp
+08049557	pop	%ebp
+08049558	ret	
+08049559	leal	(%esi), %esi			 <--- patchable instruction (size = 7)
+--------------------------------------------------------------------------------
+08049560	lcall	0x00001280
+08049565	mov	%eax, %edx
+08049567	shr	$0x1F, %edx
+0804956a	add	%edx, %eax
+0804956c	and	$0x01, %eax
+0804956f	sub	%edx, %eax
+08049571	cmp	$0xBFFFFFFF, %esi
+08049577	mov	%eax, %ebx
+08049579	jbe	0x00001581
+0804957b	sub	$0x40000000, %esi
+********************************************************************************
+08049581	movl	0x0, %edx			 <--- patchable instruction (size = 6)
+08049587	movl	$0x00000000, (%esi)			 <--- patchable instruction (size = 6)
+0804958d	movl	%eax, 0xC(%esp)			 <--- patchable instruction (size = 4)
+08049591	movl	$0x00000000, 0x8(%esp)			 <--- patchable instruction (size = 8)
+08049599	movl	%edx, 0x10(%esp)			 <--- patchable instruction (size = 4)
+0804959d	movl	$0x080502FE, 0x4(%esp)			 <--- patchable instruction (size = 8)
+080495a5	movl	$0x00000001, (%esp)			 <--- patchable instruction (size = 7)
+--------------------------------------------------------------------------------
+080495ac	lcall	0x00001030
+080495b1	ljmp	0x0000154A
+********************************************************************************
+080495b3	nop	
+080495b4	leal	(%esi), %esi			 <--- patchable instruction (size = 4)
+--------------------------------------------------------------------------------
+********************************************************************************
+080495b8	leal	-0x1(%eax), %edi			 <--- patchable instruction (size = 3)
+080495bb	sar	$0x00000001, %edi
+--------------------------------------------------------------------------------
+080495bd	ljmp	0x0000150F
+080495c2	nop	
+080495c3	nop	
+
+
+
+
+######################################################à
+
+
+FUNCTION: exptrees_random_rec
+
+08049520	push	%ebp
+08049521	mov	%esp, %ebp
+08049523	push	%esi
+08049524	push	%ebx
+08049525	sub	$0x20, %esp
+08049528	movl	0x8(%ebp), %esi			 <--- patchable instruction (size = 3)
+0804952b	movl	0xC(%ebp), %ebx			 <--- patchable instruction (size = 3)
+0804952e	cmp	$0x02, %esi
+08049531	jg	0x000015F0
+08049537	cmp	$0x01, %esi
+0804953a	jz	0x00001590
+0804953c	cmp	$0x02, %esi
+0804953f	jnz	0x000015FA
+08049545	mov	$0x0001, %si
+08049549	lcall	0x000012B4
+0804954e	cmp	$0xBFFFFFFF, %ebx
+08049554	jbe	0x0000155C
+08049556	sub	$0x40000000, %ebx
+0804955c	movl	$0x00000000, (%ebx)			 <--- patchable instruction (size = 6)
+08049562	movl	%esi, (%esp)			 <--- patchable instruction (size = 3)
+08049565	movl	$0x00000008, 0x4(%esp)			 <--- patchable instruction (size = 8)
+0804956d	lcall	0x00001520
+08049572	movl	%esi, (%esp)			 <--- patchable instruction (size = 3)
+08049575	xor	%esi, %esi
+08049577	movl	$0x0000000C, 0x4(%esp)			 <--- patchable instruction (size = 8)
+0804957f	lcall	0x00001520
+08049584	add	$0x20, %esp
+08049587	mov	%esi, %eax
+08049589	pop	%ebx
+0804958a	pop	%esi
+0804958b	pop	%ebp
+0804958c	ret	
+0804958d	leal	(%esi), %esi			 <--- patchable instruction (size = 3)
+08049590	lcall	0x000012B4
+08049595	mov	%eax, %edx
+08049597	shr	$0x1F, %edx
+0804959a	add	%edx, %eax
+0804959c	and	$0x01, %eax
+0804959f	sub	%edx, %eax
+080495a1	cmp	$0xBFFFFFFF, %ebx
+080495a7	mov	%eax, %esi
+080495a9	jbe	0x000015B1
+080495ab	sub	$0x40000000, %ebx
+080495b1	movl	0x0, %edx			 <--- patchable instruction (size = 6)
+080495b7	movl	$0x00000000, (%ebx)			 <--- patchable instruction (size = 6)
+080495bd	movl	%eax, 0xC(%esp)			 <--- patchable instruction (size = 4)
+080495c1	movl	$0x00000000, 0x8(%esp)			 <--- patchable instruction (size = 8)
+080495c9	movl	%edx, 0x10(%esp)			 <--- patchable instruction (size = 4)
+080495cd	movl	$0x0805033E, 0x4(%esp)			 <--- patchable instruction (size = 8)
+080495d5	movl	$0x00000001, (%esp)			 <--- patchable instruction (size = 7)
+080495dc	lcall	0x00001064
+080495e1	add	$0x20, %esp
+080495e4	mov	%esi, %eax
+080495e6	pop	%ebx
+080495e7	pop	%esi
+080495e8	pop	%ebp
+080495e9	ret	
+080495ea	leal	(%esi), %esi			 <--- patchable instruction (size = 6)
+080495f0	sub	$0x01, %esi
+080495f3	sar	$0x00000001, %esi
+080495f5	ljmp	0x00001549
+080495fa	lcall	0x00000F74
+080495ff	nop	
